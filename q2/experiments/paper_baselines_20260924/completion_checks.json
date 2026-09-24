@@ -1,0 +1,12 @@
+{
+  "n_completed_runs": 9,
+  "n_predictions": 30,
+  "polarity_counts": {
+    "Neutral": 9,
+    "Positive": 16,
+    "Negative": 5
+  },
+  "source_unchanged": true,
+  "selection_provenance_matches": true,
+  "figure_count": 12
+}

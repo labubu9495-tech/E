@@ -1,0 +1,14 @@
+{
+  "validation_rows_checked": [
+    0,
+    1,
+    2,
+    100,
+    400,
+    727
+  ],
+  "fresh_BERT_vs_cached_max_abs_delta": 0.0009765625,
+  "probability_max_abs_delta": 1.0669287570097552e-06,
+  "intensity_max_abs_delta": 9.189665570508154e-06,
+  "classifications_identical": true
+}

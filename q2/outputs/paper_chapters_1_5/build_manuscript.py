@@ -1,0 +1,500 @@
+"""Build an evidence-linked, editable Chinese manuscript (chapters 1--5)."""
+import sys
+sys.path.insert(0,'/tmp/codex_paper_doclibs')
+from pathlib import Path
+import csv,json,math,re,shutil
+from collections import Counter
+import numpy as np
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from matplotlib import font_manager
+from matplotlib.patches import FancyBboxPatch,FancyArrowPatch
+from docx import Document
+from docx.shared import Inches,Pt,Cm,RGBColor
+from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.oxml import OxmlElement
+from docx.oxml.ns import qn
+
+OUT=Path(__file__).resolve().parent
+ROOT=OUT.parents[1]
+EXP=ROOT/'experiments/paper_baselines_20260924'
+FIG=OUT/'figures';FIG.mkdir(exist_ok=True)
+def readj(p):return json.loads(Path(p).read_text())
+def readcsv(p):
+    with Path(p).open(encoding='utf-8-sig') as f:return list(csv.DictReader(f))
+raw100=readj(OUT/'raw100_inventory.json')
+audit=readj(ROOT/'results/audit.json')
+checks=readj(ROOT/'results/attachment_code_audit/raw_input_checks.json')
+scores={n:readj(EXP/f'{n}_ensemble_metrics.json') for n in ['mlp','state_aug','mult','emt_dlfr','emt_no_restore']}
+seed_rows=readcsv(EXP/'seed_summary.csv')
+preds=readcsv(EXP/'attachment3_overall_predictions.csv')
+boot=readj(EXP/'paired_bootstrap.json')['results']
+SELECT=['clean','text_30_middle','audio_30_middle','vision_30_middle']
+NAMES={'mlp':'MLP融合','state_aug':'观测状态递推','mult':'MulT适配版','emt_dlfr':'EMT-DLFR适配版','emt_no_restore':'EMT去恢复约束'}
+blocks=[]
+def h(level,text):blocks.append(('h',level,text))
+def p(text):
+    for s in text.strip().split('\n\n'):
+        blocks.append(('p',s.strip()))
+def eq(text,number):blocks.append(('eq',text,number))
+def table(caption,headers,rows):blocks.append(('table',caption,headers,[[str(c) for c in r] for r in rows]))
+def fig(path,caption,width=15.5):
+    src=Path(path);dst=FIG/src.name
+    if src.resolve()!=dst.resolve():shutil.copyfile(src,dst)
+    blocks.append(('fig',dst,caption,width))
+def note(text):blocks.append(('note',text))
+
+
+def figures():
+    font='/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc'
+    font_manager.fontManager.addfont(font)
+    plt.rcParams.update({'font.family':font_manager.FontProperties(fname=font).get_name(),'axes.unicode_minus':False,'font.size':10})
+    f,ax=plt.subplots(figsize=(11,5.3));ax.set(xlim=(0,11),ylim=(0,5.3));ax.axis('off')
+    def box(x,y,w,hh,text,color):
+        ax.add_patch(FancyBboxPatch((x,y),w,hh,boxstyle='round,pad=0.08',facecolor=color,edgecolor='#52677b',lw=1))
+        ax.text(x+w/2,y+hh/2,text,ha='center',va='center',fontsize=10)
+    def arrow(a,b):ax.add_patch(FancyArrowPatch(a,b,arrowstyle='-|>',mutation_scale=13,color='#52677b'))
+    box(.2,4.1,10.5,.65,'原始附件审查：样本身份、字段维度、标签、内容范围、可用观测与质量标记','#e9eef4')
+    box(.3,2.1,3.0,1.25,'问题一：自主特征与对齐\n附件1 → 文本/声学/视觉\n词级时间映射与100条输出\n【方案已设计，提取尚待完成】','#fff0d8')
+    box(4,2.1,3.0,1.25,'问题二：缺失鲁棒预测\n附件2训练/验证 → 共同编码\n连续遮挡、融合、递推与论文对照\n【已有训练及附件3预测】','#dcefe9')
+    box(7.7,2.1,3.0,1.25,'问题三：预测依据解释\n附件2训练/验证 → 模态作用\n附件4预测、局部证据与视频回看\n【接口与时间映射尚待完成】','#fff0d8')
+    for x in [1.8,5.5,9.2]:arrow((x,4.1),(x,3.4))
+    arrow((3.4,2.65),(3.9,2.65));arrow((7.1,2.65),(7.6,2.65))
+    ax.text(3.65,1.85,'方法借鉴\n非数据前置依赖',ha='center',fontsize=8,color='#52677b')
+    ax.text(7.35,1.85,'共享预测接口\n解释另行验证',ha='center',fontsize=8,color='#52677b')
+    box(.3,.4,10.4,.8,'共同评价边界：训练拟合参数，验证选择方案；专项无标签，仅冻结后推理\n位置级缺失统计不等于秒级缺失；解释必须回到原素材，不能用生成特征代替真实证据','#e9eef4')
+    f.tight_layout();f.savefig(FIG/'技术路线.png',dpi=230);plt.close(f)
+    f,axes=plt.subplots(1,2,figsize=(10,3.4))
+    counts=np.array([audit['splits'][x]['class_counts'] for x in ['train','valid']])
+    for i,(a,name) in enumerate(zip(axes,['训练集','验证集'])):
+        bars=a.bar(['负向','中性','正向'],counts[i],color=['#547f9b','#b5a17a','#c56b60']);a.bar_label(bars,padding=4)
+        a.set_title(name);a.set_ylabel('样本数');a.set_ylim(0,max(counts[i])*1.18)
+    f.tight_layout();f.savefig(FIG/'类别分布.png',dpi=230);plt.close(f)
+
+
+def content():
+    h(1,'1 问题重述与分析')
+    h(2,'1.1 问题背景')
+    p('情感预测是自然人机交互、智能客服和具身智能中的基础任务。人在表达态度时，词语内容、语音韵律和面部行为通常同时参与：文本提供语义线索，音频反映语速、停顿和声音变化，视觉提供表情与动作信息。单一模态可能出现语义歧义或观测不足，因而需要建立能够利用多源信息的预测模型。')
+    p('实际场景与理想的完整输入存在差异。音视频采样频率不同，词语持续时间不等，特征序列需要明确的对应关系；转写失败、声学干扰和人脸检测失败可能造成局部观测不可用；预测模型即使输出准确，也可能无法说明其主要依据。因此，本题需要同时处理特征提取与对齐、局部缺失下的稳定预测，以及可回查原始素材的解释三个问题。')
+    p('本研究以赛题提供的CMU-MOSEI相关视频与标准化特征为唯一情感建模数据来源[1]。对于情感极性采用负向、中性、正向三分类，对于强度采用连续值回归。通用预训练编码器用于基础特征处理，模型参数、结构选择与结果统计均服从题目规定的数据使用边界。')
+    h(2,'1.2 问题重述')
+    h(3,'1.2.1 问题一：多模态特征提取与时序对齐')
+    p('针对附件1的100条原始视频及配套英文转写文本，建立文本、语音、视觉三种情感相关特征的定义、提取和对齐流程。输出须覆盖全部样本，保留样本标识、特征矩阵、有效长度、填充规则与原素材的对应记录；说明工具版本和关键参数，并通过典型样本展示文本片段、语音区间、视频帧段之间的对应关系。自主生成的特征文件应具有完整性、可核验性和可复现性。')
+    h(3,'1.2.2 问题二：局部模态缺失下的鲁棒情感预测')
+    p('针对一个或多个模态的部分连续位置不可用的情形，利用附件2训练集建立情感极性与强度预测模型，在验证集选择结构及参数，并分析缺失模态类型、缺失位置和区间长度对性能的影响。局部缺失不等于整路模态完全不存在。最终使用冻结的预测器对附件3全部30条无标签样本输出结果。第一问自提特征不是第二问训练的必需前置输入。')
+    h(3,'1.2.3 问题三：可解释性情感预测')
+    p('针对决策依据不易追溯的问题，建立同时输出情感预测、主要参考模态、模态作用程度与局部关键证据的分析方法。模型仍在附件2训练/验证划分上学习与选择，附件4的20条样本用于最终预测和解释。关键证据需要对应原始文本片段、语音时段或视觉关键帧，不能只给出没有原素材对应关系的注意力热力图。')
+    h(2,'1.3 问题分析')
+    h(3,'1.3.1 多模态时间尺度差异与特征对应问题')
+    p('文本以词或子词组织，声学特征通常以短时窗采样，视觉以视频帧组织，三者长度与时间分辨率不同。仅将三个矩阵截成同样行数，不能保证相同行具有相同时间含义。问题一应建立统一时间基准，并保存词到子词、子词到时间区间和音视频聚合窗口的映射。对于官方对齐特征，只接受题面给定的序列对应形式，不自行把第j行解释为视频的第j/50时刻。')
+    p('附件1与附件2不是同一批样本。先前审计发现100条原始样本只有18条ID在附件2中出现，故不能用附件2特征代替问题一的自主提取。问题一的工具、特征维数可以合理选择，但即使与附件2维数相同，也不能据此认定两者语义或提取流程一致。')
+    h(3,'1.3.2 连续局部缺失与情感预测稳定性问题')
+    p('连续缺失会在相邻位置同时移除情感线索，影响跨模态补充与时序记忆。建模时需要区分内容范围、原始可用性和人工遮挡三个概念，保留中间空位的顺序，使缺失长度提示和状态传播有明确含义。音视频全零行只能被操作性地识别为不可用观测，其成因无法仅凭数值判定。')
+    p('本题属于不完整观测下的监督多模态序列到样本学习，而非预测未来时刻的时间序列外推。本文先构建可用观测融合及隐状态递推候选，再使用MLP、GRU和公开论文结构进行验证。模型复杂度的增加是否有效由统一条件下的实测决定，不预先假定状态递推或特征恢复一定更优。')
+    h(3,'1.3.3 模态作用量化与原始证据追溯问题')
+    p('模型解释包含模态层面和局部位置层面。可通过控制输入扰动，测量某种模态或某段内容被移除后的类别概率与强度变化，再对关键区域回看原素材。由于不同模态可能包含冗余信息，单次删除后预测不变并不必然说明该模态未起作用；归因需要考虑模态组合并进行忠实性检验。')
+    p('问题二的遮挡工具可以复用于问题三，但评价目的不同：问题二比较预测与真实标签，问题三比较模型判断在受控扰动前后的变化。附件4对齐版13号视觉全零，应标记为视觉不可用，而非解释为视觉贡献低。恢复器生成的表示属于模型估计，也不能充当视频中真实出现的表情证据。')
+    h(3,'1.3.4 研究现状与相关工作')
+    p('多模态情感分析的相关研究主要从跨模态交互与不完整观测恢复两个方向展开。低秩多模态融合LMF通过因子分解表达模态间乘性交互[2]；MulT利用多个方向的跨模态注意力，将源模态信息传递到目标序列[3]；TFR-Net引入特征重建以处理不完整多模态输入[4]；EMT-DLFR通过全局—局部交互结合低层重建与高层表示吸引，提高缺失条件下的表示稳定性[5]。')
+    p('这些方法与赛题的输入和评价口径存在差异。部分开源实现使用逐位置随机缺失、二分类评价或不同的文本编码器，不能直接套用论文中的数值。本文实际完成MulT和EMT-DLFR的赛题适配，统一为三分类与回归、同一冻结文本编码器和连续区间评价；LMF与TFR-Net仅作为相关工作介绍，不报告未运行方法的实验成绩。')
+    h(2,'1.4 总体建模思路与技术路线')
+    p('总体流程为“附件审查—统一表示与掩码—候选模型训练—缺失条件验证—专项推理与证据追溯”。数据审查先确定样本身份与输入接口，问题一以原始视频为入口建立自主特征和时间映射；问题二直接使用附件2的对齐版本，统一重编码文本，比较融合与递推模型并开展缺失消融；问题三可以复用合格预测器与掩码接口，但需另行完成模态作用分析和原视频定位。')
+    p('当前第二问的正式实验和附件3预测已完成。第一问完成了原始视频清单核查，但尚未生成自主三模态特征；第三问尚未完成专项加载、解释验证和真实时间映射。本稿第4章给出可实施的数学方案并保留待填结果，避免把计划写成已完成实验。')
+    fig(FIG/'技术路线.png','图1 总体技术路线及当前完成范围')
+
+    h(1,'2 模型假设与符号说明')
+    h(2,'2.1 模型基本假设')
+    p('假设1：赛题给定的样本身份和情感标注作为监督依据予以保留，不根据模型输出擅自修改标签。该假设不要求每条标注完全无噪声；预测误差分析仍需考虑语义歧义与标注不确定性。')
+    p('假设2：在所选择的官方对齐版本中，不同模态的同一存储位置具有题目规定的对应关系。该关系仅用于位置级建模，不进一步假设各位置等时长或已经具有已知的真实时间戳。')
+    p('假设3：内容位置由特殊词元与注意力信息共同识别。对本批官方附件，在内容范围内音视频的有限非零行视为可用观测；token 100按已核验的专项缺失约定处理。全零特征的真实来源不作额外推断，通用文本中的未知词也不一律等价于缺失。')
+    p('假设4：训练集上计算的可用观测均值和标准差能够作为验证及专项输入的共同尺度。训练、验证划分保持官方的原视频分组隔离，不假定不同视频分布完全一致。分布偏移对专项泛化的影响作为结果局限保留。')
+    p('假设5：人工连续遮挡可以用于研究局部观测损失对预测的影响，但它不被假定为附件3真实生成机制的精确复现。缺失增强只移除原有信息，不利用专项文本匹配或跨版本补回原始内容。')
+    p('假设6：状态递推中的隐变量是为片段级预测学习的潜在表示，而不是经测量验证的瞬时情绪状态。其传播与更新结构借鉴部分观测系统的思想，不赋予严格卡尔曼滤波、已知动力学或最优控制的结论。')
+    p('假设7（仅用于第一问拟定方案）：英文转写与音频具有足够的内容对应性，能够进行词级强制对齐；对齐置信度低、原文不匹配或无法定位的片段须保留失败标记。此假设尚需在100条样本实际提取时验证，不能据此直接填入对齐误差。')
+    h(2,'2.2 主要符号与变量定义')
+    table('表1 主要符号与变量', ['符号','含义','取值或单位'],[
+        ['i，m，t','样本、模态、存储位置索引','m∈{T,A,V}；官方t=0,…,49'],
+        ['Xᵢᵐ，xᵢₜᵐ','模态特征矩阵及单位置向量','第二问维数256/74/35'],
+        ['sᵢₜ，Lᵢ','内容位置掩码及内容长度','s∈{0,1}；L=Σₜsᵢₜ'],
+        ['oᵢₜᵐ','人工遮挡前的可用观测掩码','1为可用，不等同attention'],
+        ['bᵢₜᵐ，õᵢₜᵐ','人工遮挡掩码、遮挡后的可用掩码','õ=s·o·(1−b)'],
+        ['ρ，rᵢᵐ','目标遮挡比例、实际不可用比例','分母需注明内容或原可用位置'],
+        ['Iᵢ，Jᵢₖ','连续位置区间、原素材时间区间','I用索引；J用秒，二者不同'],
+        ['dᵢₜᵐ，gᵢₜᵐ','连续无观测步数及log间隔表示','g=log(1+d)'],
+        ['hᵢₜᵐ，uᵢₜ','模态投影表示与当前融合表示','自建模型维数32'],
+        ['zᵢₜ，a，kᵢₜ','递推隐状态、保持系数、更新门','a与k逐分量位于(0,1)'],
+        ['cᵢ，yᵢ','真实极性类别与连续强度','c∈{0,1,2}；y∈[−3,3]'],
+        ['p̂ᵢ，ŷᵢ','预测类别概率、预测强度','Σcp̂ᵢc=1；ŷ∈[−3,3]'],
+        ['μᵐ，σᵐ','训练可用观测的均值和标准差','逐特征维计算'],
+        ['G，Hᵐ','EMT全局上下文与局部表示','G为3个128维token'],
+        ['N，K','评价样本数、类别数','验证N=728；K=3'],
+        ['sg(·)，⊙','停止梯度、逐元素乘法','训练运算符']])
+
+    h(1,'3 数据审查与预处理')
+    h(2,'3.1 数据集构成与各附件使用范围')
+    table('表2 附件构成及使用边界',['附件','规模与内容','本研究用途'],[
+        ['附件1','100条视频，37个原视频目录，英文文本与标签','问题一自主特征；本稿仅完成原始清单核查'],
+        ['附件2','4850条；训练3395/验证728/测试727','训练拟合与开发验证；test标签未用于选模'],
+        ['附件3','30条无标签局部缺失特征；两版本','第二问冻结模型后的最终推理'],
+        ['附件4','20条无标签视频及特征；两版本','第三问最终预测与证据回看，尚待实现']])
+    p('第二问选择aligned_50版本。官方文本连续特征维数为768，音频74，视觉35；但附件3对齐版没有预计算text字段，因此训练、验证和专项统一从text_bert经固定BERT-Mini编码，得到256维文本向量。这是共同输入接口的工程选择，不意味着新256维向量等价于官方768维特征。')
+    h(2,'3.2 样本编号对应与数据完整性检查')
+    p('附件1以video_id和clip_id共同确定样本，原视频路径按两级目录对应。对100条清单逐一核对视频存在性并读取音视频轨道元数据，均能找到配套文件。此次仅核查容器及轨道可解析性，不将其等同于逐帧观看、语义校验或已完成特征提取。')
+    p('附件2按划分与字段集中存储，样本应从data[split][field][i]读取。ID使用“video_id$_$clip_id”格式，不能按下划线任意拆分。附件3缺少内部id，采用原始文件名作为稳定标识并自然排序；附件4单条矩阵没有同样的批次轴，需要额外适配，不能直接复用附件3入口。')
+    p('输入审计确认附件3有4条未对齐文本与附件2 test相同，附件4有5条四项特征与附件2 test完全相同。因此，附件2 test和专项测试不能无条件作为相互独立的两份证据。重合仅用于数据质量说明，未导出匹配标签，也未用于恢复专项缺失内容。')
+    h(2,'3.3 标签定义与训练、验证数据组织')
+    eq('cᵢ = 0（yᵢ < 0）；cᵢ = 1（yᵢ = 0）；cᵢ = 2（yᵢ > 0）','3-1')
+    p('式（3-1）中分类编码0代表负向，而连续强度0代表中性，两者不可混淆。训练时分类标签转换为整数long，回归标签转换为浮点数。附件1表格中的连续标签实际存为字符串，原始清单读取时显式转换为数值。')
+    p('保留官方划分。训练集与验证集分别含3395和728条样本，原始video_id在训练、验证、测试划分之间无交集。标准化、类别先验、强度中位数等参数仅由训练集计算；验证集用于早停及结构选择，因此本文所有验证分数均是开发评价，不声称为独立测试泛化精度。')
+    h(2,'3.4 序列有效长度、填充位置与模态缺失的区分')
+    p('存储长度50包括[CLS]、内容词元、[SEP]和padding，真实内容最多48个词元。本文用经核验的[SEP]定位内容尾端，排除特殊标记和padding，同时保留内容区的内部空位。文本attention连续为1只说明位置存在，不能证明文字内容完整。')
+    eq('Lᵢ = Σₜ sᵢₜ；oᵢₜᵐ ∈ {0,1}；õᵢₜᵐ = sᵢₜ oᵢₜᵐ (1−bᵢₜᵐ)','3-2')
+    p('附件3中27/30条含token 100，即[UNK]，合计131处；内容区该掩码与音频全零位置在30条样本中逐位一致。配对输入还确认了原词元被替换而attention保持1。故对本附件将100视为不可用文本标记，在BERT编码之前擦除词元、attention及segment，再按可用掩码清零输出。通用文本未知词的语义不作同样推断。')
+    p('附件2对齐版音视频第0行与第49行均为结构性零；预计算文本在padding处仍有非零向量，不能以向量非零判断有效文本。未对齐版有890条样本在vision_lengths之后仍有非零视觉行，直接前缀裁剪会丢失观测；本研究选择对齐版避开该长度字段，并仍采用逐位置掩码，不将非零行压紧。')
+    fig(ROOT/'results/screenshot_recheck/attention_vs_availability.png','图2 附件3中attention与内容可用性不同：03号与20号实测掩码')
+    h(2,'3.5 异常值处理与特征标准化')
+    p('首先校验字段、形状、词元整数性和有限性。附件3的token存为float32，只有全部为合法整数且位于词表范围内时才转换为long。第二问当前训练与验证音视频数据中未发现非有限元素；若未来遇到非有限行，按不可用观测处理并输出质量标记，而不静默删除样本。')
+    eq('μⱼᵐ = (Σᵢ,ₜ oᵢₜᵐ xᵢₜⱼᵐ)/(Σᵢ,ₜ oᵢₜᵐ)，i仅取训练集','3-3')
+    eq('σⱼᵐ = max{√[(Σᵢ,ₜ oᵢₜᵐ(xᵢₜⱼᵐ−μⱼᵐ)²)/(Σᵢ,ₜ oᵢₜᵐ)]，10⁻⁵}','3-4')
+    eq('x̃ᵢₜⱼᵐ = (xᵢₜⱼᵐ−μⱼᵐ)/σⱼᵐ（观测可用）；否则x̃ᵢₜⱼᵐ=0','3-5')
+    p('式（3-3）—（3-5）用于音频与视觉，掩码在原始特征上先生成，再进行标准化；文本词元编号不做Z-score。复查时仅用训练可用观测重算音视频均值和标准差，与已有统计量逐元素相同，最大绝对差为0。原始PKL保持不变，异常处理只作用于模型输入。')
+    h(2,'3.6 样本分布与数据质量统计')
+    table('表3 数据分布与质量统计',['项目','训练集','验证集','测试集/专项'],[
+        ['样本数','3395','728','附件2 test：727'],['负向/中性/正向','967/758/1670','206/184/338','test标签不作本轮统计'],
+        ['内容长度：最小/中位数/最大','1/20/48','1/21.5/48','单位：词元位置'],
+        ['内容位置总数','76882','17172','test：16855'],['内容内音频不可用行','65','46','原因未知'],
+        ['内容内视觉不可用行','4249','980','原因未知'],['整条视觉全零样本','110','15','test：28'],
+        ['未对齐视觉声明长度后仍非零','618','141','test：131'],['文本UNK位置','0','0','test：0；附件3：131'],
+        ['专项输入异常','—','—','附件4对齐13号视觉全零']])
+    p('训练集正向占比为49.19%，中性占22.33%，负向占28.48%；仅报告准确率会掩盖少数类别的识别差异，因此同时报告Macro-F1和逐类召回。训练与验证的视觉不可用行比例分别约为5.53%与5.71%，这些比例以内容位置为分母，不包含padding和特殊token。')
+    fig(FIG/'类别分布.png','图3 训练集与验证集的三类样本分布')
+    p('附件3的01、05、10号内容区未发现文本UNK或音视频全零行；20号音频不可用14/48，约29.17%，30号为12/24，即50%。这些是特征位置的不可用比例，不能写成真实缺失时长比例，更不能使用“零行数÷50”得到所谓平均缺失率。')
+
+    h(1,'4 问题一：多模态特征提取与时序对齐模型的建立与求解')
+    note('本章状态：数学方案与文件规范已给出，100条原视频清单已核查；自主特征提取、词级强制对齐和对齐误差实验尚未执行。所有“拟采用”和“待补”内容均不得直接改写为已完成结果。')
+    h(2,'4.1 原始样本处理流程与输入输出定义')
+    p('拟以单条视频、配套英文转写和样本标识为输入，按“媒体解析—文本规范化—词级音频定位—三模态特征计算—时间区间聚合—掩码与映射写入—完整性校验”的顺序处理。转写原文与规范化文本同时保留；标点、口吃标记等清洗动作记录在日志中，避免无法解释的文本变化。')
+    p('输出拟包含按词元排列的三模态矩阵、逐模态可用掩码、内容长度、词元到原词映射、每个位置的起止时间、原视频时间戳及异常标记。为覆盖完整样本，建议保留变长完整序列，并在批处理时动态填充；若另设最大长度，须明确截断位置及丢弃内容，不将第二问官方50位置的限制自动套用于第一问全部原视频。')
+    h(2,'4.2 三模态情感特征的定义与提取')
+    h(3,'4.2.1 基于预训练语言模型的文本语义特征提取')
+    p('文本分支拟采用固定权重的英文BERT类编码器[6]。为便于工具复用，可选与第二问相同的BERT-Mini，使用分词器的offset_mapping或word_ids记录子词来源。每个有效内容词元对应一行上下文化语义向量，特殊词元和padding单独标记。长文本采用保留原索引的分窗编码，再按明确规则合并重叠位置，避免整段尾部被静默截断。')
+    eq('Hᵀ = Encoder(token_ids，attention_mask，segment_ids)','4-1')
+    p('采用该模型时单行文本维数为256。这里的特征由附件1文本自主计算，与附件2官方768维预计算text是不同产物；是否采用同一权重应在实施后固定revision并记录校验值。目前未生成附件1的这些向量。')
+    h(3,'4.2.2 语音韵律与声学特征提取')
+    p('声学分支拟先按媒体时间戳提取音频，保留原采样率信息，再统一到工具要求的采样率。可选openSMILE的eGeMAPS配置[7]作为可解释的声学描述，以每个目标词区间计算88维功能统计量；工具配置、短区间的最小时长和边界扩展规则应明确固定。也可采用逐帧低层描述后聚合，但不能在未实际核对配置时把维数写成已验证值。')
+    p('词区间过短、语音活动不足或工具未返回有效特征时，应保留该位置并标注声学不可用；扩展分析窗口不得越过媒体边界，需同时记录真实词区间与实际分析区间。该拟定特征定义不用于解释附件2的74维具体物理含义，题面并未提供这种对应关系。')
+    h(3,'4.2.3 视觉表情与动作特征提取')
+    p('视觉分支拟使用OpenFace等开源工具[8]，在视频帧上提取面部动作单元强度、头部姿态及检测置信度。可选17项AU强度与6项头部姿态构成23维描述，但最终应以工具实际输出字段及版本为准。人脸检测失败或置信度低于预先确定阈值的帧，不作为有效视觉观测参与聚合。')
+    p('若片段包含多个人脸，须固定目标人物选择或跟踪规则，并对切换、遮挡和无脸帧记录质量标记，不能任意混合不同人物。问题一拟用的23维定义与附件2的35维官方视觉特征彼此独立，不由维度接近推定来源相同。')
+    h(2,'4.3 跨模态时序对齐模型')
+    h(3,'4.3.1 文本词级时间定位与词元映射')
+    p('拟通过英文强制对齐工具，将已给转写与音频对应为词级区间Jₖ=[aₖ,bₖ)。再由分词器建立词元j到原词k的映射π(j)。同一原词拆出的多个子词可共享该词的时间区间，同时保留“词级分辨率”标记；没有声学证据时，不将词长均分伪装成精确子词时间。')
+    eq('Jⱼ = Jπ(j)；π(j)给出子词j所属的原词索引','4-2')
+    p('若转写中的词未能对齐，记录null时间和失败原因，可保留文本特征而将对应音视频聚合状态标记为待核验。对齐程序只能提供候选位置，仍需典型样本人工回看核查。第一问的词级时间方案可以为第三问提供方法，但不能证明附件4已有特征行自动满足该映射。')
+    h(3,'4.3.2 基于时间区间重叠的音视频特征聚合')
+    p('对可按短时区间采样的声学或视觉帧级特征，令Qᵣ=[uᵣ,vᵣ)为第r个特征支持区间，qᵣ∈{0,1}表示该帧是否可信。目标区间与帧区间的重叠长度决定聚合权重。对仅有帧时间点的视频，可用相邻PTS中点构建帧支持区间，并限制到视频有效时间范围。')
+    eq('wⱼᵣ = max{0，min(bⱼ,vᵣ)−max(aⱼ,uᵣ)} · qᵣ','4-3')
+    eq('xⱼᵐ = (Σᵣ wⱼᵣ fᵣᵐ)/(Σᵣ wⱼᵣ)，当Σᵣwⱼᵣ>0','4-4')
+    p('无有效重叠时将该模态标记为不可用，不以其他时间段的均值悄悄填充。对于区间级eGeMAPS功能统计，可直接在Jⱼ对应的音频片段计算，不机械地对88维功能统计再次套用帧均值；须在配置中注明采用哪一种路径。')
+    h(3,'4.3.3 对齐序列的有效长度与填充规则')
+    p('第一问拟以有效内容词元数作为序列长度。存储时采用变长矩阵，或按批次最大长度填充；padding不计入真实长度，不参与池化与缺失率统计。文本存在但声学或视觉不可用的位置仍属于真实序列，不能删去或将有效长度改为非零行数。')
+    eq('padding_maskⱼ = 1(j ≥ L)；observed_maskⱼᵐ = 1(该位置模态m有可信特征)','4-5')
+    h(3,'4.3.4 序列位置与原始文本、语音及视频的对应关系')
+    p('每行特征拟绑定sample_id、token_index、word_index、原文字符区间、词级开始/结束时间、音频支持范围和视觉帧PTS集合。不同子词共享同一词级时间时明确标注映射粒度。这样可以从重要性最高的特征位置回查原词、播放音频区间并提取对应视频帧，而不是仅凭帧率或总时长推算。')
+    p('附件1音视频轨道存在小幅时长差；此前容器审计最大约155毫秒。这不直接等于声画不同步，处理时还需考虑起始时间与编辑列表。聚合边界按各自实际PTS及共同可用区间截取，并将无法覆盖的尾端记录为边界情况。')
+    h(2,'4.4 特征文件构建与存储规范')
+    h(3,'4.4.1 特征矩阵、掩码与时间映射的组织方式')
+    table('表4 问题一拟定输出字段（尚未生成）',['字段','组织方式','说明'],[
+        ['sample_id / source_hash','字符串 / SHA-256','原video_id与clip_id及来源校验'],
+        ['text / audio / vision','L×dᵀ / L×dᴬ / L×dⱽ','维数按最终工具配置固定'],
+        ['sequence_mask / observed_mask','L / L×3','内容位置与模态可用性分开'],
+        ['token_ids / word_index / offsets','长度L的数组','原词、字符与子词对应'],
+        ['time_map','L×2；无映射处为null','单位秒；另存词级分辨率'],
+        ['frame_pts / audio_support','变长列表','保留原帧与分析窗口索引'],
+        ['quality_flags / tool_config','列表 / 字典','失败原因、版本、参数和权重哈希']])
+    p('数值矩阵可使用float32压缩存储，词元索引用整数，掩码用布尔值；时间映射和工具元数据采用可读JSON。若在50MB总提交限制下使用量化或压缩，应评估压缩误差并记录规则，不得以删掉样本或必要映射来满足体积。')
+    h(3,'4.4.2 特征文件读取与完整性校验')
+    p('读取后检查三种矩阵的行数与掩码、时间映射一致，所有有效数值有限，时间区间位于媒体范围内且开始不晚于结束，词元到原词映射不越界。汇总样本ID集合必须与原始100条清单完全一致。文件损坏、重复ID和缺失输出应触发明确报错；单一模态失败则保留样本与质量标记。')
+    h(2,'4.5 全部100条样本的特征提取结果汇总')
+    note('待补实测：目前没有100条自主特征文件，故本节先给出真实原始样本核查表。下表的“待提取”不是成功输出；完成提取后须补充三模态实际维数、有效长度、时间覆盖及文件校验。')
+    p(f'本轮重新核查100条原视频，均存在音频与视频轨道。容器时长范围为{min(r["duration_seconds"] for r in raw100):.3f}—{max(r["duration_seconds"] for r in raw100):.3f}秒。其标签分布为负向18、中性25、正向57。表5保留原ID和真实时长；完整机器可读清单另存CSV，可作为后续提取完成情况逐条核销的依据。')
+    table('表5 附件1全部100条原始样本核查清单（并非特征提取结果）', ['序号','样本ID','时长/s','极性','自主特征状态'],[
+        [i+1,r['sample_id'],f'{r["duration_seconds"]:.3f}',{'Negative':'负向','Neutral':'中性','Positive':'正向'}[r['annotation']],'待提取'] for i,r in enumerate(raw100)])
+    h(2,'4.6 典型样本的时序对齐验证')
+    h(3,'4.6.1 文本片段、语音时段与视频帧段对应展示')
+    p('拟从语音清晰、文本完整、人物可见的样本中选择至少1条作为典型案例，展示原句、词级时间区间、对应音频波形和视频帧段。选择规则先确定，不仅展示模型最容易的片段；同时保留至少一个低置信度或边界异常案例说明失效情形。')
+    table('表6 典型样本证据展示模板（待运行后填写）',['记录项','应填写内容','当前状态'],[
+        ['样本及原句','真实ID、转写文本','原始清单可查，案例尚未确定'],
+        ['词级定位','原词、开始/结束时间、对齐置信度','待强制对齐'],
+        ['音频证据','波形/韵律、对应播放区间','待提取'],
+        ['视觉证据','帧PTS、关键帧、检测质量','待提取'],
+        ['交叉核验','子词—词—音频—视频对应记录','待人工回看']])
+    h(3,'4.6.2 三模态特征可视化与对齐误差分析')
+    p('特征可视化拟在同一时间轴绘制词语区间、声学曲线和视觉AU强度，并用颜色区分有效观测、工具失败及padding。若人工标注少量词边界作为核验参照，可报告开始与结束边界绝对误差的均值、中位数和90%分位数；未有人工作为参照时，只能报告可用率和一致性检查，不能自行生成“真实对齐误差”。')
+    eq('E_align = (1/(2K)) Σₖ(|âₖ−aₖ*| + |b̂ₖ−bₖ*|)','4-6')
+    p('其中aₖ*、bₖ*是人工核验边界，âₖ、b̂ₖ是工具输出。当前没有该人工边界集，式（4-6）仅定义未来评价方法，本稿不填写误差数值或伪造对齐图。')
+    h(2,'4.7 工具版本、关键参数与可复现性说明')
+    table('表7 工具与参数记录状态',['环节','拟用或已用工具','状态及需固定事项'],[
+        ['原视频轨道核查','ffprobe','已用于100条媒体清单，见本轮环境记录'],
+        ['问题一文本编码','BERT-Mini或固定英文BERT','拟用；固定分窗长度、tokenizer及revision'],
+        ['问题一词级定位','英文强制对齐工具，如MFA','未运行；固定词典、声学模型及置信规则'],
+        ['问题一声学提取','openSMILE eGeMAPS配置','未运行；固定版本、88维配置与短窗策略'],
+        ['问题一视觉提取','OpenFace AU与pose','未运行；固定字段、阈值和人物跟踪规则'],
+        ['问题二共同编码','google/bert_uncased_L-4_H-256_A-4','已运行；revision 387825ce42dbb39b87911cdf8e383ee3b25184f8']])
+    p('复现材料应同时给出运行命令、输入清单、工具参数、依赖版本、失败日志和文件校验值。第一问尚未执行的工具不填写虚构版本。当前第二问已记录Python、PyTorch、Transformers等实际版本，并通过新目录解压运行验证；这一事实不能替代第一问自己的复现检查。')
+
+    h(1,'5 问题二：局部模态缺失下鲁棒情感预测模型的建立与求解')
+    p('本章按“数学描述—自建递推模型—共同训练与论文对照—实验选择—专项推理”组织。观测状态感知递推是本文构建并检验的候选方案，并非实测最优模型。后续对照中按固定规则选中EMT-DLFR适配版；其结构和训练目标在5.3、5.4节明确给出，所有附件3结果均来自该冻结选择。')
+    h(2,'5.1 局部连续缺失的数学描述')
+    h(3,'5.1.1 缺失模态、缺失区间与观测掩码定义')
+    p('对样本i的真实内容位置集合Sᵢ={t:sᵢₜ=1}，选择模态子集Mᵢ和连续区间Iᵢ=[aᵢ,aᵢ+wᵢ)。区间按内容位置生成，但保留原存储索引。人工遮挡仅改变可用掩码及对应输入，不删去序列行；双模态可共享同一区间，也可采用不同起点形成错位遮挡。')
+    eq('bᵢₜᵐ = 1(m∈Mᵢ且t∈Iᵢ)；õᵢₜᵐ = sᵢₜ oᵢₜᵐ(1−bᵢₜᵐ)','5-1')
+    p('文本缺失在编码之前实施，防止被遮词通过上下文化编码泄漏到其他位置。音视频在投影前再次按õ屏蔽。原来不可用的位置与人工新遮挡分开记录，恢复监督只使用o=1且õ=0的位置。')
+    h(3,'5.1.2 缺失位置、缺失时长与缺失率的计算')
+    eq('wᵢ = min{Lᵢ，max[1，round(ρLᵢ)]}，ρ>0；ρ=0时wᵢ=0','5-2')
+    eq('rᵢᵐ = Σₜsᵢₜ(1−õᵢₜᵐ)/Lᵢ；r_newᵢᵐ = Σₜoᵢₜᵐbᵢₜᵐ/Σₜoᵢₜᵐ','5-3')
+    p('r表示内容中的总不可用比例，r_new表示原可用观测中新增移除的比例；后者分母为0时记为不可计算，不报告成0%缺失。目标比例ρ控制区间位置预算，因取整及原始不可用位置存在，实际新移除观测比例可能与ρ不同。')
+    p('缺失起点分别设置为前部、中部和后部，另设随机起点用于训练。当前没有原视频逐词时间映射，因此“时长”仅以连续位置数及内容比例代理，不能把50%词元解释为视频一半秒数。论文中所有缺失曲线均采用此口径。')
+    h(2,'5.2 基于观测状态感知递推的鲁棒融合模型')
+    h(3,'5.2.1 三模态特征编码与维度投影')
+    eq('hᵢₜᵐ = õᵢₜᵐ · tanh{LN[Wᵐ(õᵢₜᵐx̃ᵢₜᵐ)+bᵐ]}','5-4')
+    p('文本、音频、视觉分别由256、74、35维投影到32维。输入在学习变换之前屏蔽，投影后再乘可用掩码，防止偏置和归一化使不可用位置产生伪观测。文本编码器固定权重并使用eval模式，不参与情感标签微调。')
+    h(3,'5.2.2 观测状态与连续缺失间隔表示')
+    p('对每种模态维护距最近可用观测的内容步数d。观测存在时归零，内容位置缺失时加一，padding不推进计数。初始无观测区间从首个内容位置累计，间隔以log(1+d)压缩，与三种模态的可用状态拼接为6维描述。')
+    eq('dₜᵐ = 0（õₜᵐ=1）；dₜᵐ=dₜ₋₁ᵐ+1（sₜ=1且õₜᵐ=0）','5-5')
+    eq('gₜᵐ = log(1+dₜᵐ)；qₜ = [õₜᵀ,õₜᴬ,õₜⱽ,gₜᵀ,gₜᴬ,gₜⱽ]','5-6')
+    h(3,'5.2.3 当前可用模态的融合机制')
+    eq('eₜᵐ = w₂ᵀ tanh(W₁[hₜᵐ;qₜ]+b₁)+b₂','5-7')
+    eq('αₜᵐ = õₜᵐ exp(eₜᵐ) / Σₙ õₜⁿ exp(eₜⁿ)','5-8')
+    eq('uₜ = tanh{Wᵤ[αₜᵀhₜᵀ;αₜᴬhₜᴬ;αₜⱽhₜⱽ;õₜ]+bᵤ}','5-9')
+    p('式（5-8）只在当前可用模态间归一化；分母为0时令所有权重及uₜ为0。加权后按模态身份拼接，避免先求和丢失模态来源。这些权重用于预测融合，尚未经过第三问的解释忠实性验证，不直接称为真实因果贡献。')
+    h(3,'5.2.4 历史状态传播与观测更新机制')
+    eq('a = sigmoid(θ)；zₜ⁻ = a ⊙ zₜ₋₁','5-10')
+    eq('kₜ = sigmoid{Wₖ[zₜ⁻;uₜ;qₜ]+bₖ} · 1(∃m:õₜᵐ=1)','5-11')
+    eq('zₜ = (1−kₜ)⊙zₜ⁻ + kₜ⊙uₜ，当sₜ=1','5-12')
+    p('初始化z₀=0，保持系数初值为0.98。内容位置全部模态不可用时，更新门为0，仅传播历史；padding直接保持上一步状态，不衰减也不参与池化。最终对真实内容位置的隐状态均值池化为片段表示。该结构表达了“无观测时保留历史、有观测时调整状态”的建模思想，但效果必须通过消融验证。')
+    h(3,'5.2.5 情感极性分类与情感强度回归')
+    eq('z̄ᵢ = (Σₜsᵢₜzᵢₜ)/max(Lᵢ,1)；p̂ᵢ = softmax(Wcz̄ᵢ+bc)','5-13')
+    eq('ŷᵢ = 3tanh[(Wrz̄ᵢ+br)/3]；ĉᵢ = argmaxc p̂ᵢc','5-14')
+    p('极性和强度由独立输出头预测，强度限制在[−3,3]。完全没有可用观测的样本使用训练类别先验及训练强度中位数，避免数值异常。独立输出头可能在接近0的区域出现类别与强度符号不一致，本文保留原始输出并统计该现象，不根据无标签专项结果临时修改阈值。')
+    h(2,'5.3 模型目标函数与训练方案')
+    h(3,'5.3.1 分类与回归的联合优化目标')
+    eq('L_pred = −(1/N)Σᵢlog p̂ᵢ,cᵢ + λ(1/N)ΣᵢHuber₁(ŷᵢ−yᵢ)，λ=1','5-15')
+    p('Huber₁(e)在|e|≤1时为e²/2，否则为|e|−1/2。分类与回归共用表示，前者关注类别边界，后者约束强度连续性。MLP、GRU、状态递推与MulT使用式（5-15）。')
+    p('EMT-DLFR适配版另设完整和人工缺失两个训练视图。两者共享预测参数，完整支路只提供训练监督；低层恢复对被人工移除的原可用特征计算SmoothL1，高层恢复在全局、文本、音频、视觉四路表示上使用SimSiam式对称停止梯度余弦吸引。')
+    eq('L_rec = Σₘ { [Σᵢ,ₜ,ⱼ oᵢₜᵐbᵢₜᵐ SmoothL1(x̂ᵢₜⱼᵐ−xᵢₜⱼᵐ)] / max(dᵐΣᵢ,ₜoᵢₜᵐbᵢₜᵐ,1) }','5-16')
+    eq('L_att = −½ Σₖ meanᵢ{cos(pᵢₖ^miss,sg(zᵢₖ^full))+cos(pᵢₖ^full,sg(zᵢₖ^miss))}','5-17')
+    eq('L_EMT = L_pred^miss + L_pred^full + L_rec + L_att','5-18')
+    p('式（5-17）在原本有可信观测的样本/模态上计算；整路自然不可用时跳过该路吸引监督。L_att可为负，因此EMT训练总损失不能与只有预测项的模型直接比较。去恢复约束的消融保留两支预测监督，仅令L_rec和L_att权重为0，避免把增加完整视图监督带来的作用混入恢复机制结论。验证和专项推理仅执行单个可见输入分支。')
+    h(3,'5.3.2 连续区间缺失模拟与数据增强')
+    p('训练样本以40%概率保留原观测，40%概率对单模态遮挡，20%概率对双模态遮挡。区间比例在10%—50%之间采样，起点随机；双模态包含同步和错位区间。文本提前生成8组“遮token后再编码”的视图，在训练时抽取；音视频掩码在线生成。所有模型共享该接口，避免某一模型获得被遮词的完整编码。')
+    p('自然不可用位置仍保留其原掩码，不人为宣称这些位置存在完整恢复目标。附件3虽然观测到高度同步的不可用位置及散点样式，本轮没有据此回调训练比例或阈值。当前32条件没有专门三模态同步遮挡，这是实验覆盖的限制，后续扩展应独立列明。')
+    h(3,'5.3.3 模型训练、参数选择与停止准则')
+    table('表8 主要训练设置',['项目','自建及普通基线','MulT适配','EMT及消融'],[
+        ['文本编码','固定BERT-Mini 256维','同左','同左'],['融合规模','隐维32','隐维30，5头，5层','隐维128，4头，2层'],
+        ['优化器','AdamW','AdamW','AdamW'],['学习率','0.001','0.001','0.0001'],['weight decay','0.0001','0.0001','0.001'],
+        ['batch / 最多轮次','64 / 40','64 / 40','64 / 40'],['早停 / 梯度裁剪','6轮 / 5','6轮 / 5','6轮 / 5'],
+        ['主模型随机种子','17、29、43','17、29、43','17、29、43'],['新增调参搜索','—','本轮不搜索','本轮不搜索']])
+    p('每轮在完整输入与文本、音频、视觉各30%中部缺失的四种验证条件下计算Macro-F1，平均值最高的检查点被保留，相同时选择平均MAE更低者。结构按照三个种子的该指标均值排序，随后平均三个检查点的类别概率和强度输出形成集成。该顺序在正式论文方法实验前固定，不在看到集成结果后切换口径。')
+    p('论文方法训练前先检查GPU利用率、显存、CPU和内存负载，通过模型边界检查与小批量拟合后，在两张较空闲的RTX4090上分别运行。各任务结束后释放资源；耗时受共享服务器影响，不把墙钟时间当作跨设备严格算法复杂度比较。')
+    h(2,'5.4 实验设置与评价方法')
+    h(3,'5.4.1 基线模型与公平对比设置')
+    p('普通对照包括：仅文本预测；各模态可用位置池化后拼接的MLP；使用相同逐位置融合输入的GRU；固定历史保持系数的平滑模型；以及自建状态递推及其变体。论文对照使用MulT和EMT-DLFR。所有正式比较共享附件2划分、256/74/35维输入、缺失规则和评价条件，但网络容量、优化目标和计算成本不同，不声称等参数量或等FLOPs。')
+    p('MulT保留六个方向的成对跨模态注意力，再将每个目标模态的两路表示拼接并经自注意力记忆网络汇总。适配时以最后真实内容位置代替固定末行，不可用源位置不作为注意力键，真实缺失目标位置仍可作为查询；最后输出三分类和有界回归。')
+    p('EMT先由音频/视觉LSTM获得16/32维局部及片段表示，文本使用共同编码的可用内容池化，投影到128维。三路片段表示构成全局上下文G，与各模态局部表示Hᵐ双向交互，并聚合三路更新后的全局信息。方向、模态与层之间共享MPU参数，采用4头、2层设置。局部缺失位置保留为可推断的潜在表示，但不可用原始值已清除；该表示不被当作原素材证据。')
+    eq('Hᵐ ← MPU(Hᵐ,G)；Gᵐ ← MPU(G,Hᵐ)；G ← AttentionPool(Gᵀ,Gᴬ,Gⱽ)','5-19')
+    p('相对原论文，本文改变了文本编码器、数据规模、缺失机制、任务输出与部分掩码实现，因此称为“赛题适配版”，不能把该结果描述成原论文完整复现。MulT固定代码版本为a670936…，EMT-DLFR为e421621…，完整版本和MIT许可保留在实验材料中。')
+    h(3,'5.4.2 Accuracy、F1、MAE与Pearson指标定义')
+    eq('Accuracy = (1/N)Σᵢ1(ĉᵢ=cᵢ)；Macro-F1 = (1/3)Σc F1c','5-20')
+    eq('F1c = 2TPc/(2TPc+FPc+FNc)；Weighted-F1 = Σc(nc/N)F1c','5-21')
+    eq('MAE = (1/N)Σᵢ|ŷᵢ−yᵢ|','5-22')
+    eq('Pearson = Σᵢ(yᵢ−ȳ)(ŷᵢ−ŷ̄) / √[Σᵢ(yᵢ−ȳ)² · Σᵢ(ŷᵢ−ŷ̄)²]','5-23')
+    p('F1分母为0时按0处理；Pearson在任一变量方差为0时未定义，不填成虚假的有效相关系数。Macro-F1平等对待三类，Weighted-F1按真实类别频数加权，二者分别标明。本文不采用将中性并入正向的二分类指标。')
+    h(3,'5.4.3 重复实验与结果统计方法')
+    p('主候选各运行17、29、43三个种子，报告指标均值及样本标准差。另单独报告先平均预测再计算的集成指标；非线性的F1使这两种统计可能产生不同排序。历史状态模块消融只有种子17，应与同种子的完整状态模型配对，不能拿单种子结果与三种子均值作严格归因。')
+    p('对候选模型与MLP的预测差异，以原始video_id为组进行1000次配对Bootstrap重采样，当前验证包含239个原视频组。该区间描述本验证集内的波动，不消除模型选择偏差，也不等同于独立测试上的显著性证明。')
+    h(2,'5.5 验证集基础性能与基线对比')
+    table('表9 完整输入：三种子预测集成的验证性能',['模型','Accuracy','Macro-F1','MAE','Pearson'],[
+        [NAMES[n]]+[f'{scores[n]["clean"][k]:.4f}' for k in ['accuracy','macro_f1','mae','pearson']] for n in NAMES])
+    table('表10 四条件选模：三种子指标的均值与标准差',['模型','Macro-F1（均值±标准差）','MAE（均值±标准差）'],[
+        [NAMES[r['model']],f'{float(r["selection_macro_f1_mean"]):.4f} ± {float(r["selection_macro_f1_std"]):.4f}',f'{float(r["selection_mae_mean"]):.4f} ± {float(r["selection_mae_std"]):.4f}'] for r in seed_rows])
+    p('按表10所对应的预定规则，本轮四个主候选中选中EMT-DLFR。其完整输入集成Macro-F1较MLP提高0.0145，MAE降低0.0240，但Accuracy从0.5824降至0.5783。四条件集成Macro-F1为0.5483、MAE为0.6414，原MLP分别为0.5409和0.6644。该结果体现了类别均衡识别和总体准确率之间的取舍。')
+    p('MulT在本设置下未超过MLP，说明更复杂的两两跨模态注意力不必然带来收益。自建状态递推也没有稳定超过简单融合，不能将其写成最终性能最优方法。另需保留一个负面机制结果：去恢复约束的EMT集成在完整输入上取得0.5628 Macro-F1和0.6318 MAE，优于完整EMT-DLFR；其三种子指标均值排序却不同，本文不据此事后修改选模口径。')
+    p('EMT-DLFR相对MLP，完整输入Macro-F1差的95%分组Bootstrap区间为[−0.0165,0.0442]，跨过0；MAE差的区间为[−0.0466,−0.0014]。后者在当前开发验证中支持较低回归误差，但由于验证参与选模，仍不应推广为未经独立评估的泛化保证。')
+    fig(EXP/'figures/01_集成对比.png','图4 完整输入下的五种方法集成性能',15.0)
+    fig(EXP/'figures/03_种子稳定性.png','图5 四条件选模指标的三种子均值与标准差')
+    h(2,'5.6 模态缺失对预测性能的影响规律')
+    h(3,'5.6.1 不同缺失模态类型的影响')
+    miss_rows=[]
+    for m,cn in [('text','文本'),('audio','音频'),('vision','视觉')]:
+        for ratio in [10,30,50]:
+            ds=[scores['emt_dlfr'][f'{m}_{ratio}_{loc}'] for loc in ['front','middle','back']]
+            miss_rows.append([cn,f'{ratio}%',f'{np.mean([d["macro_f1"] for d in ds]):.4f}',f'{np.mean([d["mae"] for d in ds]):.4f}'])
+    table('表11 EMT-DLFR集成：不同缺失模态与比例（前中后位置平均）',['模态','目标遮挡比例','Macro-F1','MAE'],miss_rows)
+    p('文本缺失对预测影响最明显：目标比例从10%增至50%时，平均Macro-F1由0.5482降至0.5140，MAE由0.6418升至0.6803。视觉缺失的Macro-F1也随比例增加而下降，但变化幅度较小。音频遮挡后本轮指标没有出现单调恶化，甚至略好于完整输入；这不能解释为音频无效或遮挡必然有益，可能涉及冗余信息、噪声和有限样本波动。')
+    h(3,'5.6.2 不同缺失位置的影响')
+    table('表12 EMT-DLFR集成：30%遮挡下的位置效应',['模态','位置','Macro-F1','MAE'],[
+        [cn,lc,f'{scores["emt_dlfr"][f"{m}_30_{loc}"]["macro_f1"]:.4f}',f'{scores["emt_dlfr"][f"{m}_30_{loc}"]["mae"]:.4f}'] for m,cn in [('text','文本'),('audio','音频'),('vision','视觉')] for loc,lc in [('front','前部'),('middle','中部'),('back','后部')]])
+    p('文本后部30%遮挡的Macro-F1为0.5283，低于前部0.5335和中部0.5372，但其MAE并非最大。视觉三种位置差异也较小。由此不能给出“中部一定最重要”或“后部一定最危险”的普遍规律；应分别报告分类、回归和样本层面的变化。当前位置实验以存储内容序列定位，不代表等长秒级区间。')
+    h(3,'5.6.3 不同缺失时长与缺失率的影响')
+    p('比例实验在10%、30%、50%三个水平进行，区间宽度由式（5-2）计算。由于样本长度不同，相同比例对应不同的绝对位置数；原始不可用位置也会使实际移除观测数不同。结果材料另存每样本的目标预算、实际删除数及原可用数，避免将同一比例视为相同信息损失。')
+    fig(EXP/'figures/04_缺失曲线.png','图6 连续缺失比例与分类表现：三种子均值及标准差')
+    fig(EXP/'figures/05_缺失曲线.png','图7 连续缺失比例与回归误差：三种子均值及标准差')
+    extra=['audio_vision_30_sync','text_audio_30_sync','audio_vision_30_offset','audio_30_two_blocks']
+    table('表13 EMT-DLFR集成：补充复杂缺失条件',['条件','Macro-F1','MAE'],[[n,f'{scores["emt_dlfr"][n]["macro_f1"]:.4f}',f'{scores["emt_dlfr"][n]["mae"]:.4f}'] for n in extra])
+    p('补充条件包括音视频同步、文本音频同步、音视频错位及音频双块遮挡。双块与单块的内容位置总预算保持一致，用以区分遮挡总量和分布形态。当前条件覆盖仍有限，不外推为对所有三模态联合缺失模式均已验证鲁棒。')
+    h(2,'5.7 核心模块消融实验')
+    abnames=['state_aug','state_clean','state_no_gap','state_no_history']
+    ab={n:readj(ROOT/'runs'/f'{n}_seed17'/'metrics.json') for n in abnames}
+    table('表14 状态模型消融：固定种子17、同一四条件指标',['变体','Macro-F1','MAE'],[
+        [cn,f'{ab[n]["selection_macro_f1"]:.4f}',f'{ab[n]["selection_mae"]:.4f}'] for n,cn in [('state_aug','完整状态模型'),('state_clean','去缺失增强'),('state_no_gap','去间隔提示'),('state_no_history','去历史递推')]])
+    h(3,'5.7.1 连续缺失增强的作用')
+    p('固定种子17时，状态模型加入缺失增强后四条件Macro-F1从0.5286升至0.5352，MAE从0.6717降至0.6651，提供了该候选上的正向初步证据。但三种子GRU对照中，增强版Macro-F1均值0.5285略低于无增强版0.5306，MAE则由0.6762降至0.6651。因此，增强收益依赖模型与指标，不能写成所有模型全面提升。')
+    h(3,'5.7.2 缺失状态信息的作用')
+    p('去间隔提示变体仍保留可用性掩码，只移除log间隔特征。种子17下其Macro-F1为0.5329，完整状态模型为0.5352，差值较小；MAE分别为0.6654与0.6651。故该消融只检验连续间隔提示的附加作用，不能宣称已证明全部观测掩码的价值，也不能凭一个种子断言稳定提升。')
+    h(3,'5.7.3 时序状态递推的作用')
+    p('去历史递推后Macro-F1为0.5373，略高于完整状态模型0.5352，但MAE升至0.6769。该结果提示历史状态对连续强度估计可能更有帮助，而分类提升并不成立。不同预测目标的最优结构可能不同，本文据此保留状态递推作为有解释的候选方案，而不将机制直觉当作实验证明。')
+    h(3,'5.7.4 论文模型两级恢复约束的补充消融')
+    p('EMT-DLFR与去恢复变体均完成三个种子，后者仍保留完整/缺失视图两支预测监督。四条件单次训练Macro-F1均值分别为0.5412和0.5382，MAE分别为0.6584和0.6586；但先集成预测后的四条件Macro-F1分别为0.5483和0.5529。恢复机制在不同统计口径下没有稳定占优，因此本轮不能把相对MLP的全部收益归因于低层重建和高层吸引。')
+    fig(EXP/'figures/10_恢复消融.png','图8 两级恢复约束消融：保持相同的完整/缺失视图监督')
+    h(2,'5.8 预测结果可视化与错误归因')
+    cm=np.asarray(scores['emt_dlfr']['clean']['confusion_matrix'])
+    table('表15 EMT-DLFR完整输入混淆矩阵（行真实，列预测）',['真实类别','预测负向','预测中性','预测正向','召回率'],[[cn,*cm[i].tolist(),f'{cm[i,i]/cm[i].sum():.2%}'] for i,cn in enumerate(['负向','中性','正向'])])
+    p('EMT-DLFR的中性召回率为43.48%，高于MLP的29.89%，这有助于解释Macro-F1提高而Accuracy略降的现象。弱情感、中性附近边界和长文本上下文仍容易出现错误。类别头与强度头共享表示但没有强制符号一致性，相关冲突应作为诊断结果单独统计。')
+    fig(EXP/'figures/07_混淆矩阵.png','图9 MLP、MulT与EMT-DLFR的逐类识别表现')
+    fig(EXP/'figures/08_强度散点.png','图10 三种方法预测强度与真实强度的对应关系')
+    p('对验证错误清单进行文本层面的初步检查，可区分“能由现有证据确认的输入限制”与“需要原音视频进一步核验的解释假说”。例如，样本102858$_$4的原转写很长，预测将强正向判为负向，可能涉及固定词元预算未覆盖后部评价；最终应核对实际token保留范围。样本f_ZJ7L14oYQ$_$27包含“I don’t have to worry about it anymore”，否定作用于担忧而表达正向含义，不能仅因出现否定词就判负向。')
+    p('另一个样本TWszOxkOV0w$_$1含“outrage”并讨论CEO报酬与绩效，被预测为正向，体现了复杂议题中的情感对象和立场识别困难。这些是结合真实文本提出的错误分析线索，尚未通过归因干预证明模型具体使用了哪些词；没有原视频核验时，不编造“表情与声音冲突”等原因。')
+    fig(EXP/'figures/11_配对区间.png','图11 EMT-DLFR相对MLP的配对差值及95%分组Bootstrap区间')
+    h(2,'5.9 附件3全量预测结果汇总与结果文件说明')
+    p('按既定规则冻结EMT-DLFR三个检查点后，对附件3对齐版全部30条样本推理。类别概率与强度分别在三个种子间取均值，类别由平均概率最大项确定。输入继续使用官方附件专用UNK策略、训练统计量和同一文本编码器，没有跨版本补全、标签查表或专项阈值调整。')
+    table('表16 附件3全部30条预测（无真实标签）',['原文件编号','极性','强度','P(负向)','P(中性)','P(正向)'],[
+        [r['sample_id'],{'Negative':'负向','Neutral':'中性','Positive':'正向'}[r['polarity']],f'{float(r["intensity"]):.4f}',f'{float(r["probability_negative"]):.4f}',f'{float(r["probability_neutral"]):.4f}',f'{float(r["probability_positive"]):.4f}'] for r in preds])
+    p('预测类别分布为负向5条、中性9条、正向16条。这是模型输出分布，不是专项准确率；附件3没有标签，不能以预测变化或正向比例接近训练集为依据宣称效果提高。完整CSV保留原文件编号、英文类别、强度和三类概率。溯源JSON记录输入哈希、检查点哈希、预处理版本、不可用区间和质量标记。')
+    p('本轮新模型5项针对性测试、GPU小批量拟合及检查点重载验证均通过；此前10项输入不变量检查和原始数据/缓存逐项核对亦通过。将选定模型复现包解压到独立目录后，30条CSV和溯源文件与开发目录输出逐字节一致。新复现包约36.09MB，仅覆盖第二问，整题仍需为第一问特征及第三问解释材料控制总附件体积。')
+    p('当前结果支持将EMT结构作为进一步研究的候选，但不支持把恢复约束或状态递推宣称为稳定最优机制。下一步若调整编码器、扩大训练预算或新增三模态同步压力测试，应作为新的实验版本记录，继续保留当前开发验证与专项推理之间的隔离。')
+
+    h(1,'参考文献')
+    refs=[
+        '[1] 2026年中国研究生数学建模竞赛E题. 复杂场景下多模态情感预测的数学建模与算法设计：题面及附件1—4[Z]. 2026.',
+        '[2] LIU Z, SHEN Y, LAKSHMINARASIMHAN V B, et al. Efficient Low-rank Multimodal Fusion With Modality-Specific Factors[C]//Proceedings of ACL. 2018. https://aclanthology.org/P18-1209/.',
+        '[3] TSAI Y H H, BAI S, LIANG P P, et al. Multimodal Transformer for Unaligned Multimodal Language Sequences[C]//Proceedings of ACL. 2019. https://arxiv.org/abs/1906.00295. 官方代码：https://github.com/yaohungt/Multimodal-Transformer.',
+        '[4] YUAN Z, LI W, XU H, et al. Transformer-based Feature Reconstruction Network for Robust Multimodal Sentiment Analysis[C]//Proceedings of ACM Multimedia. 2021. 官方代码：https://github.com/thuiar/TFR-Net.',
+        '[5] SUN L, LIAN Z, LIU B, TAO J. Efficient Multimodal Transformer with Dual-Level Feature Restoration for Robust Multimodal Sentiment Analysis[J]. IEEE Transactions on Affective Computing, 2023（在线发表年份按官方代码引用）. https://arxiv.org/abs/2208.07589. 官方代码：https://github.com/sunlicai/EMT-DLFR.',
+        '[6] DEVLIN J, CHANG M W, LEE K, TOUTANOVA K. BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding[C]//Proceedings of NAACL-HLT. 2019. https://aclanthology.org/N19-1423/.',
+        '[7] EYBEN F, SCHERER K R, SCHULLER B W, et al. The Geneva Minimalistic Acoustic Parameter Set (GeMAPS) for Voice Research and Affective Computing[J]. IEEE Transactions on Affective Computing, 2016, 7(2):190-202.（问题一拟选工具背景，尚未运行）',
+        '[8] BALTRUSAITIS T, ZADEH A, LIM Y C, MORENCY L P. OpenFace 2.0: Facial Behavior Analysis Toolkit[C]//IEEE International Conference on Automatic Face & Gesture Recognition. 2018.（问题一拟选工具背景，尚未运行）'
+    ]
+    for ref in refs:p(ref)
+
+
+def set_font(run,name='Times New Roman',east='宋体',size=11):
+    run.font.name=name;run.font.size=Pt(size)
+    rpr=run._element.get_or_add_rPr();fonts=rpr.rFonts
+    if fonts is None:fonts=OxmlElement('w:rFonts');rpr.insert(0,fonts)
+    fonts.set(qn('w:eastAsia'),east)
+
+
+def render():
+    doc=Document();sec=doc.sections[0]
+    sec.page_height=Cm(29.7);sec.page_width=Cm(21)
+    sec.top_margin=Cm(2.1);sec.bottom_margin=Cm(2.0);sec.left_margin=Cm(2.2);sec.right_margin=Cm(2.0)
+    normal=doc.styles['Normal'];normal.font.name='Times New Roman';normal.font.size=Pt(11)
+    normal._element.get_or_add_rPr().rFonts.set(qn('w:eastAsia'),'宋体')
+    normal.paragraph_format.line_spacing=1.35;normal.paragraph_format.space_after=Pt(5)
+    normal.paragraph_format.first_line_indent=Cm(.74)
+    for level,size in [(1,16),(2,13),(3,11.5)]:
+        style=doc.styles[f'Heading {level}'];style.font.name='Arial';style.font.size=Pt(size);style.font.bold=True;style.font.color.rgb=RGBColor.from_string('18364A')
+        style._element.get_or_add_rPr().rFonts.set(qn('w:eastAsia'),'黑体')
+        style.paragraph_format.first_line_indent=Cm(0);style.paragraph_format.space_before=Pt(12);style.paragraph_format.space_after=Pt(6)
+        style.paragraph_format.keep_with_next=True
+    doc.core_properties.author='';doc.core_properties.last_modified_by='';doc.core_properties.title='复杂场景下多模态情感预测：第1—5章论文初稿'
+    doc.core_properties.subject='基于实际代码、附件审查与验证实验的论文写作稿'
+    foot=sec.footer.paragraphs[0];foot.alignment=WD_ALIGN_PARAGRAPH.CENTER;foot.paragraph_format.first_line_indent=Cm(0)
+    field=OxmlElement('w:fldSimple');field.set(qn('w:instr'),'PAGE');foot._p.append(field)
+    title=doc.add_paragraph();title.alignment=WD_ALIGN_PARAGRAPH.CENTER;title.paragraph_format.first_line_indent=Cm(0)
+    r=title.add_run('复杂场景下多模态情感预测\n数学建模与算法设计');set_font(r,east='黑体',size=20);r.bold=True
+    sub=doc.add_paragraph('第1—5章论文初稿｜根据现有代码与实测结果整理');sub.alignment=WD_ALIGN_PARAGRAPH.CENTER;sub.paragraph_format.first_line_indent=Cm(0)
+    doc.add_paragraph('稿件使用说明',style='Heading 2')
+    for s in ['本稿可编辑，章节按给定目录编排；增加1.3.4相关工作和5.7.4恢复约束消融，以对应实际方法与实验。',
+              '第二问已有结果直接取自实验文件；第一问仅完成原视频清单核查，自主特征与对齐尚未完成，第4章所有待补内容均明确标记。',
+              '观测状态递推保留为自建候选；最终专项预测使用按预定规则选中的EMT-DLFR适配版，避免模型叙述与结果来源不一致。',
+              '本文是写作初稿，尚未套用最终竞赛模板。提交前需补齐第一问实测内容及第三问正文，并统一参考文献、图表和附件体积。']:
+        doc.add_paragraph(s)
+    doc.add_page_break()
+    doc.add_paragraph('目录',style='Heading 1')
+    # Static editable outline is reliable in Word/PDF; no stale TOC field.
+    for b in blocks:
+        if b[0]=='h' and b[1]<=2:
+            pp=doc.add_paragraph(b[2]);pp.paragraph_format.first_line_indent=Cm(0);pp.paragraph_format.left_indent=Cm(.45*(b[1]-1));pp.paragraph_format.space_after=Pt(2);pp.paragraph_format.line_spacing=1.05
+            for rr in pp.runs:set_font(rr,size=9)
+    doc.add_page_break()
+    markdown=['# 复杂场景下多模态情感预测：第1—5章论文初稿','', '> 第一问含待实施方案与真实原始清单，不包含虚构特征成果；第二问结果来自实测。','']
+    for b in blocks:
+        kind=b[0]
+        if kind=='h':
+            if b[1]==1 and b[2][0] in '2345':doc.add_page_break()
+            doc.add_paragraph(b[2],style=f'Heading {b[1]}');markdown += ['#'*b[1]+' '+b[2],'']
+        elif kind in ('p','note'):
+            pp=doc.add_paragraph(b[1])
+            if kind=='note':
+                pp.paragraph_format.first_line_indent=Cm(0)
+                for rr in pp.runs:rr.bold=True;rr.font.color.rgb=RGBColor.from_string('9A531A')
+                pr=pp._p.get_or_add_pPr();sh=OxmlElement('w:shd');sh.set(qn('w:fill'),'FFF3E0');pr.append(sh)
+            markdown += [('> ' if kind=='note' else '')+b[1],'']
+        elif kind=='eq':
+            pp=doc.add_paragraph();pp.alignment=WD_ALIGN_PARAGRAPH.CENTER;pp.paragraph_format.first_line_indent=Cm(0);pp.paragraph_format.space_after=Pt(7)
+            # Editable native Office Math. Expressions are intentionally linear
+            # and Unicode so they remain readable without external converters.
+            om=OxmlElement('m:oMath')
+            def mathrun(parent,text):
+                mr=OxmlElement('m:r');mt=OxmlElement('m:t');mt.text=text;mr.append(mt);parent.append(mr)
+            cursor=0
+            for match in re.finditer(r'L_(pred|rec|att|EMT)(?:\^(miss|full))?',b[1]):
+                if match.start()>cursor:mathrun(om,b[1][cursor:match.start()])
+                node=OxmlElement('m:sSubSup' if match[2] else 'm:sSub')
+                base=OxmlElement('m:e');mathrun(base,'L');node.append(base)
+                sub=OxmlElement('m:sub');mathrun(sub,match[1]);node.append(sub)
+                if match[2]:
+                    sup=OxmlElement('m:sup');mathrun(sup,match[2]);node.append(sup)
+                om.append(node);cursor=match.end()
+            if cursor<len(b[1]):mathrun(om,b[1][cursor:])
+            pp._p.append(om)
+            rr=pp.add_run('  （'+b[2]+'）');set_font(rr,size=10)
+            markdown += ['`'+b[1]+'`  （'+b[2]+'）','']
+        elif kind=='table':
+            pp=doc.add_paragraph(b[1]);pp.alignment=WD_ALIGN_PARAGRAPH.CENTER;pp.paragraph_format.first_line_indent=Cm(0);pp.paragraph_format.keep_with_next=True
+            for rr in pp.runs:set_font(rr,east='黑体',size=10)
+            tb=doc.add_table(rows=1,cols=len(b[2]));tb.style='Table Grid';tb.autofit=True
+            for j,s in enumerate(b[2]):tb.rows[0].cells[j].text=s
+            trpr=tb.rows[0]._tr.get_or_add_trPr();rep=OxmlElement('w:tblHeader');trpr.append(rep)
+            for row in b[3]:
+                cells=tb.add_row().cells
+                for j,s in enumerate(row):cells[j].text=s
+            for i,row in enumerate(tb.rows):
+                rp=row._tr.get_or_add_trPr();ns=OxmlElement('w:cantSplit');rp.append(ns)
+                for cell in row.cells:
+                    for pp in cell.paragraphs:
+                        pp.paragraph_format.first_line_indent=Cm(0);pp.paragraph_format.line_spacing=1.1;pp.paragraph_format.space_after=Pt(3);pp.paragraph_format.space_before=Pt(3)
+                        for rr in pp.runs:set_font(rr,size=8.5 if len(b[2])>=5 else 9);rr.bold=i==0
+                    if i==0:
+                        sh=OxmlElement('w:shd');sh.set(qn('w:fill'),'E9EFF4');cell._tc.get_or_add_tcPr().append(sh)
+            doc.add_paragraph().paragraph_format.space_after=Pt(0)
+            markdown += [b[1],'','|'+'|'.join(b[2])+'|','|'+'|'.join(['---']*len(b[2]))+'|']
+            markdown += ['|'+'|'.join(r)+'|' for r in b[3]];markdown.append('')
+        elif kind=='fig':
+            pp=doc.add_paragraph();pp.paragraph_format.first_line_indent=Cm(0);pp.alignment=WD_ALIGN_PARAGRAPH.CENTER;pp.paragraph_format.keep_with_next=True
+            pp.add_run().add_picture(str(b[1]),width=Cm(b[3]))
+            pp=doc.add_paragraph(b[2]);pp.paragraph_format.first_line_indent=Cm(0);pp.alignment=WD_ALIGN_PARAGRAPH.CENTER
+            for rr in pp.runs:set_font(rr,size=9)
+            markdown += [f'![{b[2]}](figures/{b[1].name})','']
+    doc.save(OUT/'E题论文初稿_第1至5章.docx')
+    (OUT/'E题论文初稿_第1至5章.md').write_text('\n'.join(markdown))
+    (OUT/'manuscript_blocks.json').write_text(json.dumps([[str(x) if isinstance(x,Path) else x for x in b] for b in blocks],ensure_ascii=False,indent=2))
+    print(json.dumps({'headings':sum(b[0]=='h' for b in blocks),'paragraphs':sum(b[0]=='p' for b in blocks),'tables':sum(b[0]=='table' for b in blocks),'figures':sum(b[0]=='fig' for b in blocks),'equations':sum(b[0]=='eq' for b in blocks),'characters':sum(len(b[1]) for b in blocks if b[0]=='p')},ensure_ascii=False))
+
+
+if __name__=='__main__':
+    figures();content();render()

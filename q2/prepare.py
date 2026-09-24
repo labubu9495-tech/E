@@ -4,7 +4,7 @@ from pathlib import Path
 import json
 import numpy as np
 import torch
-from data import ROOT, ENCODER_ID, adapt, load_pickle, sha256, dump_json, TextEncoder, interval_mask, conditions, condition_observed, normalize
+from data import ROOT, ENCODER_ID, TEXT_MISSING_POLICY, adapt, load_pickle, sha256, dump_json, TextEncoder, interval_mask, conditions, condition_observed, normalize
 
 
 def main():
@@ -15,7 +15,10 @@ def main():
     torch.set_num_threads(2)
     cache_dir = ROOT/'cache'
     cache_dir.mkdir(exist_ok=True)
-    official = next(args.data_root.rglob('aligned_50.pkl'))
+    candidates = list(args.data_root.rglob('aligned_50.pkl'))
+    if len(candidates) != 1:
+        raise ValueError(f'Expected one aligned_50.pkl under data root, found {len(candidates)}')
+    official = candidates[0]
     data = load_pickle(official)
     audit = {'official_sha256': sha256(official), 'splits': {}, 'label_mapping': {'0': 'Negative', '1': 'Neutral', '2': 'Positive'}}
     for split in ['train', 'valid']:
@@ -47,6 +50,7 @@ def main():
         schemas.append(dict(file=p.name, fields={k:list(v.shape) for k,v in s.items() if hasattr(v,'shape')}))
     audit['special_interface_only'] = schemas
     audit['zero_policy'] = 'Within SEP-defined content, finite nonzero A/V rows are operational observations. Natural zeros and artificial loss cannot be distinguished. Padding is excluded separately.'
+    audit['text_missing_policy'] = TEXT_MISSING_POLICY
     dump_json(ROOT/'results'/'audit.json', audit)
     print('Audit passed; train/valid and special interfaces verified.', flush=True)
 
@@ -112,7 +116,7 @@ def main():
         np.savez(cache_dir/f'{split}.npz', **out)
         if split=='valid':
             np.savez(cache_dir/'valid_conditions.npz', **{c['name']:condition_observed(a,c) for c in conditions()})
-    dump_json(cache_dir/'manifest.json', dict(official_sha256=audit['official_sha256'], protocol_sha256=sha256(ROOT/'protocol.json'), encoder_sha256=sha256(ROOT/'assets'/'bert-mini'/'model.safetensors')))
+    dump_json(cache_dir/'manifest.json', dict(official_sha256=audit['official_sha256'], protocol_sha256=sha256(ROOT/'protocol.json'), encoder_sha256=sha256(ROOT/'assets'/'bert-mini'/'model.safetensors'), text_missing_policy=TEXT_MISSING_POLICY, adapter_sha256=sha256(ROOT/'data.py')))
     print('Prepared all train/valid caches. No special predictions generated.',flush=True)
 
 

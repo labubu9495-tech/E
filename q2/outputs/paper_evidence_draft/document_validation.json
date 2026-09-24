@@ -1,0 +1,14 @@
+{
+  "pages": 44,
+  "tables": 21,
+  "figures": 12,
+  "equations": 48,
+  "frozen_source_files": 39,
+  "source_files_unchanged": true,
+  "heading_hierarchy_passed": true,
+  "equation_references_passed": true,
+  "pdf_no_error_glyphs": true,
+  "pdf_bounds_passed": true,
+  "attachment3_table_rows": 30,
+  "scope": "文稿、数学推导与冻结验证结果的描述复算；无重新训练或选模"
+}

@@ -9,6 +9,7 @@ import torch
 ROOT = Path(__file__).resolve().parent
 ENCODER_ID = 'google/bert_uncased_L-4_H-256_A-4'
 MODALITIES = ('text', 'audio', 'vision')
+TEXT_MISSING_POLICY = 'official_aligned_unk_v1'
 
 
 def dump_json(path, value):
@@ -45,7 +46,12 @@ def integer_tokens(value):
     return a
 
 
-def adapt(split):
+def adapt(split, *, text_missing_policy=TEXT_MISSING_POLICY):
+    # Dataset-specific convention: token 100 marks unavailable content in
+    # the official aligned attachment3 files. In general BERT data it is
+    # merely an unknown word; callers can explicitly use ordinary_unk.
+    if text_missing_policy not in (TEXT_MISSING_POLICY, 'ordinary_unk'):
+        raise ValueError(f'Unknown text missing policy: {text_missing_policy}')
     tokens = integer_tokens(split['text_bert'])
     audio = np.asarray(split['audio'], dtype=np.float32)
     vision = np.asarray(split['vision'], dtype=np.float32)
@@ -70,7 +76,8 @@ def adapt(split):
             endpoint_source.append('observed_support_approximate')
         start = 1 if ids[i, 0] in (0, 101) else 0
         sequence[i, start:end] = True
-    text_seen = sequence & attention & ~np.isin(ids, [0, 101, 102])
+    text_missing_marker = sequence & (ids == 100) if text_missing_policy == TEXT_MISSING_POLICY else np.zeros_like(sequence)
+    text_seen = sequence & attention & ~np.isin(ids, [0, 101, 102]) & ~text_missing_marker
     audio_seen = sequence & np.isfinite(audio).all(-1) & np.any(audio != 0, -1)
     vision_seen = sequence & np.isfinite(vision).all(-1) & np.any(vision != 0, -1)
     obs = np.stack([text_seen, audio_seen, vision_seen], -1)
@@ -79,12 +86,21 @@ def adapt(split):
     audio = np.where(audio_seen[..., None], np.nan_to_num(audio), 0)
     vision = np.where(vision_seen[..., None], np.nan_to_num(vision), 0)
     return dict(tokens=tokens, audio=audio, vision=vision, sequence=sequence,
-                observed=obs, endpoint_source=endpoint_source)
+                observed=obs, endpoint_source=endpoint_source,
+                padding=~attention & ~sequence, special=np.isin(ids, [101, 102]),
+                text_missing_marker=text_missing_marker, text_missing_policy=text_missing_policy,
+                nonfinite_rows=np.stack([~np.isfinite(np.asarray(split[m])).all(-1) for m in ['audio','vision']], -1))
 
 
 def interval_mask(sequence, ratio, location='random', rng=None):
+    if not np.isfinite(ratio) or not 0 <= ratio <= 1:
+        raise ValueError('Missing ratio must be finite and within [0, 1]')
+    if location not in ('random', 'front', 'middle', 'back'):
+        raise ValueError(f'Unknown interval location: {location}')
     rng = np.random.default_rng(0) if rng is None else rng
     result = np.zeros_like(sequence)
+    if ratio == 0:
+        return result
     for i, p in enumerate(sequence):
         positions = np.flatnonzero(p)
         if not len(positions):
@@ -95,6 +111,37 @@ def interval_mask(sequence, ratio, location='random', rng=None):
         if start is None:
             start = int(rng.integers(last + 1))
         result[i, positions[start:start + width]] = True
+    return result
+
+
+def position_intervals(mask):
+    """Zero-based stored positions, half-open [start, end), never seconds."""
+    padded = np.r_[False, np.asarray(mask, dtype=bool), False].astype(np.int8)
+    edges = np.diff(padded)
+    return [[int(a), int(b)] for a, b in zip(np.flatnonzero(edges == 1), np.flatnonzero(edges == -1))]
+
+
+def observation_audit(adapted, row):
+    sequence = adapted['sequence'][row]
+    n = int(sequence.sum())
+    result = dict(content_positions=n, text_missing_policy=adapted['text_missing_policy'],
+        text_unk_content_positions=np.flatnonzero(adapted['text_missing_marker'][row]).tolist(),
+        padding_positions=np.flatnonzero(adapted['padding'][row]).tolist(),
+        special_positions=np.flatnonzero(adapted['special'][row]).tolist(),
+        interval_coordinate='zero-based stored sequence positions; [start,end); not seconds',
+        missing_provenance='Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable')
+    flags=[]
+    for j, m in enumerate(MODALITIES):
+        unseen=sequence & ~adapted['observed'][row,:,j]
+        result[m+'_unavailable_positions']=int(unseen.sum())
+        result[m+'_unavailable_fraction']=float(unseen.sum()/n) if n else None
+        result[m+'_unavailable_intervals']=position_intervals(unseen)
+        if n and not adapted['observed'][row,:,j].any():
+            flags.append(m+'_entirely_unavailable')
+    if adapted['endpoint_source'][row]!='SEP':flags.append('approximate_endpoint')
+    if not n:flags.append('empty_content')
+    if adapted['nonfinite_rows'][row].any():flags.append('nonfinite_av_rows')
+    result['quality_flags']=flags
     return result
 
 

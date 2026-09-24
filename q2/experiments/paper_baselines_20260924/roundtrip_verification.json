@@ -1,0 +1,60 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "model": "mult",
+      "condition": "clean",
+      "n": 6,
+      "max_text_error": 0.0009765625,
+      "max_probability_error": 4.678964614868164e-06,
+      "max_intensity_error": 7.316470146179199e-06,
+      "classes_match": true
+    },
+    {
+      "model": "emt_dlfr",
+      "condition": "clean",
+      "n": 6,
+      "max_text_error": 0.0009765625,
+      "max_probability_error": 0.00010439753532409668,
+      "max_intensity_error": 9.429454803466797e-05,
+      "classes_match": true
+    },
+    {
+      "model": "emt_no_restore",
+      "condition": "clean",
+      "n": 6,
+      "max_text_error": 0.0009765625,
+      "max_probability_error": 4.082918167114258e-05,
+      "max_intensity_error": 7.724761962890625e-05,
+      "classes_match": true
+    },
+    {
+      "model": "mult",
+      "condition": "text_30_middle",
+      "n": 6,
+      "max_text_error": 0.0009765625,
+      "max_probability_error": 4.172325134277344e-06,
+      "max_intensity_error": 7.271766662597656e-06,
+      "classes_match": true
+    },
+    {
+      "model": "emt_dlfr",
+      "condition": "text_30_middle",
+      "n": 6,
+      "max_text_error": 0.0009765625,
+      "max_probability_error": 7.492303848266602e-05,
+      "max_intensity_error": 6.599724292755127e-05,
+      "classes_match": true
+    },
+    {
+      "model": "emt_no_restore",
+      "condition": "text_30_middle",
+      "n": 6,
+      "max_text_error": 0.0009765625,
+      "max_probability_error": 3.6776065826416016e-05,
+      "max_intensity_error": 8.96453857421875e-05,
+      "classes_match": true
+    }
+  ],
+  "scope": "Six validation rows; frozen tokenizer re-encoding, audited A/V cache and checkpoint reload; CPU vs GPU tolerances explicit."
+}

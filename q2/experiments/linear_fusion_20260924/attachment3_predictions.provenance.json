@@ -1,0 +1,3003 @@
+{
+  "family": "pooled_linear",
+  "selection_sha256": "d8e4ce86ef3ce912cd37735ac00e947887940a75dfe427e1f27c9506d85ef742",
+  "model_sha256": "6d1e35b13d1ce2edbe3929317781b92431160e9ae48e89295e4a934beced9199",
+  "prediction_sha256": "b3af32fa32442e742dd470c4a0f6911a43c25347484537a548ecccec98dd4c0e",
+  "rows": [
+    {
+      "sample_id": "附件3_01",
+      "source_file": "附件3_01.pkl",
+      "source_sha256": "b45b89a7eea55278abb130d44a6ee21128df5aa3239e68c968f9ac7743cfa0ea",
+      "content_positions": 6,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [],
+      "padding_positions": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        7
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 0,
+      "text_unavailable_fraction": 0.0,
+      "text_unavailable_intervals": [],
+      "audio_unavailable_positions": 0,
+      "audio_unavailable_fraction": 0.0,
+      "audio_unavailable_intervals": [],
+      "vision_unavailable_positions": 0,
+      "vision_unavailable_fraction": 0.0,
+      "vision_unavailable_intervals": [],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_02",
+      "source_file": "附件3_02.pkl",
+      "source_sha256": "6a628897c4b8c5e94e37f23bce680aad500fa8545414234f3564a58577c1023b",
+      "content_positions": 28,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        2,
+        5,
+        7,
+        9,
+        10
+      ],
+      "padding_positions": [
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        29
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 5,
+      "text_unavailable_fraction": 0.17857142857142858,
+      "text_unavailable_intervals": [
+        [
+          2,
+          3
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          9,
+          11
+        ]
+      ],
+      "audio_unavailable_positions": 5,
+      "audio_unavailable_fraction": 0.17857142857142858,
+      "audio_unavailable_intervals": [
+        [
+          2,
+          3
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          9,
+          11
+        ]
+      ],
+      "vision_unavailable_positions": 5,
+      "vision_unavailable_fraction": 0.17857142857142858,
+      "vision_unavailable_intervals": [
+        [
+          2,
+          3
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          9,
+          11
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_03",
+      "source_file": "附件3_03.pkl",
+      "source_sha256": "52bb6e11f4bba301e1bd90916dc9ad3a0d2d0885fec4598e3e737e2c4d100b6f",
+      "content_positions": 32,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        6,
+        16,
+        20,
+        23,
+        31
+      ],
+      "padding_positions": [
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        33
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 5,
+      "text_unavailable_fraction": 0.15625,
+      "text_unavailable_intervals": [
+        [
+          6,
+          7
+        ],
+        [
+          16,
+          17
+        ],
+        [
+          20,
+          21
+        ],
+        [
+          23,
+          24
+        ],
+        [
+          31,
+          32
+        ]
+      ],
+      "audio_unavailable_positions": 5,
+      "audio_unavailable_fraction": 0.15625,
+      "audio_unavailable_intervals": [
+        [
+          6,
+          7
+        ],
+        [
+          16,
+          17
+        ],
+        [
+          20,
+          21
+        ],
+        [
+          23,
+          24
+        ],
+        [
+          31,
+          32
+        ]
+      ],
+      "vision_unavailable_positions": 9,
+      "vision_unavailable_fraction": 0.28125,
+      "vision_unavailable_intervals": [
+        [
+          6,
+          7
+        ],
+        [
+          16,
+          17
+        ],
+        [
+          20,
+          22
+        ],
+        [
+          23,
+          27
+        ],
+        [
+          31,
+          32
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_04",
+      "source_file": "附件3_04.pkl",
+      "source_sha256": "ee1f4781ee7b7bc37e71a13e4bc53eedc8327d96a69c246964d0e84a8aa99f72",
+      "content_positions": 31,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        6,
+        8
+      ],
+      "padding_positions": [
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        32
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 2,
+      "text_unavailable_fraction": 0.06451612903225806,
+      "text_unavailable_intervals": [
+        [
+          6,
+          7
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "audio_unavailable_positions": 2,
+      "audio_unavailable_fraction": 0.06451612903225806,
+      "audio_unavailable_intervals": [
+        [
+          6,
+          7
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "vision_unavailable_positions": 2,
+      "vision_unavailable_fraction": 0.06451612903225806,
+      "vision_unavailable_intervals": [
+        [
+          6,
+          7
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_05",
+      "source_file": "附件3_05.pkl",
+      "source_sha256": "9f8e5bae8488d8ee1576b1686864b7d8fc9970cfa720758fb040b9293b7e3619",
+      "content_positions": 12,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [],
+      "padding_positions": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        13
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 0,
+      "text_unavailable_fraction": 0.0,
+      "text_unavailable_intervals": [],
+      "audio_unavailable_positions": 0,
+      "audio_unavailable_fraction": 0.0,
+      "audio_unavailable_intervals": [],
+      "vision_unavailable_positions": 0,
+      "vision_unavailable_fraction": 0.0,
+      "vision_unavailable_intervals": [],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_06",
+      "source_file": "附件3_06.pkl",
+      "source_sha256": "9e973621f141b1af24fc3686ac329a10b66ba2b84d18c21918e86bf0429f790d",
+      "content_positions": 25,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        14,
+        17,
+        25
+      ],
+      "padding_positions": [
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        26
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 3,
+      "text_unavailable_fraction": 0.12,
+      "text_unavailable_intervals": [
+        [
+          14,
+          15
+        ],
+        [
+          17,
+          18
+        ],
+        [
+          25,
+          26
+        ]
+      ],
+      "audio_unavailable_positions": 3,
+      "audio_unavailable_fraction": 0.12,
+      "audio_unavailable_intervals": [
+        [
+          14,
+          15
+        ],
+        [
+          17,
+          18
+        ],
+        [
+          25,
+          26
+        ]
+      ],
+      "vision_unavailable_positions": 3,
+      "vision_unavailable_fraction": 0.12,
+      "vision_unavailable_intervals": [
+        [
+          14,
+          15
+        ],
+        [
+          17,
+          18
+        ],
+        [
+          25,
+          26
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_07",
+      "source_file": "附件3_07.pkl",
+      "source_sha256": "62dd394e23c80af2898e039d7eb6f47556d747887331fa2853dad72e13bb223b",
+      "content_positions": 21,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        10,
+        12,
+        14
+      ],
+      "padding_positions": [
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        22
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 3,
+      "text_unavailable_fraction": 0.14285714285714285,
+      "text_unavailable_intervals": [
+        [
+          10,
+          11
+        ],
+        [
+          12,
+          13
+        ],
+        [
+          14,
+          15
+        ]
+      ],
+      "audio_unavailable_positions": 3,
+      "audio_unavailable_fraction": 0.14285714285714285,
+      "audio_unavailable_intervals": [
+        [
+          10,
+          11
+        ],
+        [
+          12,
+          13
+        ],
+        [
+          14,
+          15
+        ]
+      ],
+      "vision_unavailable_positions": 3,
+      "vision_unavailable_fraction": 0.14285714285714285,
+      "vision_unavailable_intervals": [
+        [
+          10,
+          11
+        ],
+        [
+          12,
+          13
+        ],
+        [
+          14,
+          15
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_08",
+      "source_file": "附件3_08.pkl",
+      "source_sha256": "e668faea97f9a338051c19ee66383df799b2e461d6d079df8c5f92b32bd6437e",
+      "content_positions": 15,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        9,
+        10
+      ],
+      "padding_positions": [
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        16
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 2,
+      "text_unavailable_fraction": 0.13333333333333333,
+      "text_unavailable_intervals": [
+        [
+          9,
+          11
+        ]
+      ],
+      "audio_unavailable_positions": 2,
+      "audio_unavailable_fraction": 0.13333333333333333,
+      "audio_unavailable_intervals": [
+        [
+          9,
+          11
+        ]
+      ],
+      "vision_unavailable_positions": 2,
+      "vision_unavailable_fraction": 0.13333333333333333,
+      "vision_unavailable_intervals": [
+        [
+          9,
+          11
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_09",
+      "source_file": "附件3_09.pkl",
+      "source_sha256": "ef57769eaa05f53a7d588948d565876356898658d9945202058ca763e53748b2",
+      "content_positions": 14,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        3,
+        4
+      ],
+      "padding_positions": [
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        15
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 2,
+      "text_unavailable_fraction": 0.14285714285714285,
+      "text_unavailable_intervals": [
+        [
+          3,
+          5
+        ]
+      ],
+      "audio_unavailable_positions": 2,
+      "audio_unavailable_fraction": 0.14285714285714285,
+      "audio_unavailable_intervals": [
+        [
+          3,
+          5
+        ]
+      ],
+      "vision_unavailable_positions": 2,
+      "vision_unavailable_fraction": 0.14285714285714285,
+      "vision_unavailable_intervals": [
+        [
+          3,
+          5
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_10",
+      "source_file": "附件3_10.pkl",
+      "source_sha256": "7c87d84d69e0e68b9252c9839747558d07a91fd2d079a9a0850683d0d197241e",
+      "content_positions": 6,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [],
+      "padding_positions": [
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        7
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 0,
+      "text_unavailable_fraction": 0.0,
+      "text_unavailable_intervals": [],
+      "audio_unavailable_positions": 0,
+      "audio_unavailable_fraction": 0.0,
+      "audio_unavailable_intervals": [],
+      "vision_unavailable_positions": 0,
+      "vision_unavailable_fraction": 0.0,
+      "vision_unavailable_intervals": [],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_11",
+      "source_file": "附件3_11.pkl",
+      "source_sha256": "10e9d5443cecf2de9170deaa56995de0cf9c52580a74cd334de8fea0e4a735f2",
+      "content_positions": 14,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        4,
+        5,
+        7,
+        14
+      ],
+      "padding_positions": [
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        15
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 4,
+      "text_unavailable_fraction": 0.2857142857142857,
+      "text_unavailable_intervals": [
+        [
+          4,
+          6
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          14,
+          15
+        ]
+      ],
+      "audio_unavailable_positions": 4,
+      "audio_unavailable_fraction": 0.2857142857142857,
+      "audio_unavailable_intervals": [
+        [
+          4,
+          6
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          14,
+          15
+        ]
+      ],
+      "vision_unavailable_positions": 4,
+      "vision_unavailable_fraction": 0.2857142857142857,
+      "vision_unavailable_intervals": [
+        [
+          4,
+          6
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          14,
+          15
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_12",
+      "source_file": "附件3_12.pkl",
+      "source_sha256": "d0342f4931a05e40fb0a3220010f1ac801a2f06d123bc4d9a7dc5355794347ba",
+      "content_positions": 13,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        5,
+        13
+      ],
+      "padding_positions": [
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        14
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 2,
+      "text_unavailable_fraction": 0.15384615384615385,
+      "text_unavailable_intervals": [
+        [
+          5,
+          6
+        ],
+        [
+          13,
+          14
+        ]
+      ],
+      "audio_unavailable_positions": 2,
+      "audio_unavailable_fraction": 0.15384615384615385,
+      "audio_unavailable_intervals": [
+        [
+          5,
+          6
+        ],
+        [
+          13,
+          14
+        ]
+      ],
+      "vision_unavailable_positions": 2,
+      "vision_unavailable_fraction": 0.15384615384615385,
+      "vision_unavailable_intervals": [
+        [
+          5,
+          6
+        ],
+        [
+          13,
+          14
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_13",
+      "source_file": "附件3_13.pkl",
+      "source_sha256": "9e2144ab4385636b259d9e358c7e511be5242c89340f894473317b7757f218b7",
+      "content_positions": 19,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        5,
+        14
+      ],
+      "padding_positions": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        20
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 2,
+      "text_unavailable_fraction": 0.10526315789473684,
+      "text_unavailable_intervals": [
+        [
+          5,
+          6
+        ],
+        [
+          14,
+          15
+        ]
+      ],
+      "audio_unavailable_positions": 2,
+      "audio_unavailable_fraction": 0.10526315789473684,
+      "audio_unavailable_intervals": [
+        [
+          5,
+          6
+        ],
+        [
+          14,
+          15
+        ]
+      ],
+      "vision_unavailable_positions": 2,
+      "vision_unavailable_fraction": 0.10526315789473684,
+      "vision_unavailable_intervals": [
+        [
+          5,
+          6
+        ],
+        [
+          14,
+          15
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_14",
+      "source_file": "附件3_14.pkl",
+      "source_sha256": "f6d45e8fa882062f70fd48ee1f7584b0a75ea0ed1c85a9eb218684e954dc1b82",
+      "content_positions": 23,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        21,
+        22
+      ],
+      "padding_positions": [
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        24
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 2,
+      "text_unavailable_fraction": 0.08695652173913043,
+      "text_unavailable_intervals": [
+        [
+          21,
+          23
+        ]
+      ],
+      "audio_unavailable_positions": 2,
+      "audio_unavailable_fraction": 0.08695652173913043,
+      "audio_unavailable_intervals": [
+        [
+          21,
+          23
+        ]
+      ],
+      "vision_unavailable_positions": 2,
+      "vision_unavailable_fraction": 0.08695652173913043,
+      "vision_unavailable_intervals": [
+        [
+          21,
+          23
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_15",
+      "source_file": "附件3_15.pkl",
+      "source_sha256": "263b960d4d66b25a3db447fb7a16aee7b7d735e8bee3fe55c7869ad3103bf9d4",
+      "content_positions": 27,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        2,
+        6,
+        18
+      ],
+      "padding_positions": [
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        28
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 3,
+      "text_unavailable_fraction": 0.1111111111111111,
+      "text_unavailable_intervals": [
+        [
+          2,
+          3
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          18,
+          19
+        ]
+      ],
+      "audio_unavailable_positions": 3,
+      "audio_unavailable_fraction": 0.1111111111111111,
+      "audio_unavailable_intervals": [
+        [
+          2,
+          3
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          18,
+          19
+        ]
+      ],
+      "vision_unavailable_positions": 3,
+      "vision_unavailable_fraction": 0.1111111111111111,
+      "vision_unavailable_intervals": [
+        [
+          2,
+          3
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          18,
+          19
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_16",
+      "source_file": "附件3_16.pkl",
+      "source_sha256": "df8b4c881e3fc971d532988bbd161d8d9bf8c5d16c3e7a559bb7a4045e96547f",
+      "content_positions": 34,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        5,
+        10,
+        21,
+        25
+      ],
+      "padding_positions": [
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        35
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 4,
+      "text_unavailable_fraction": 0.11764705882352941,
+      "text_unavailable_intervals": [
+        [
+          5,
+          6
+        ],
+        [
+          10,
+          11
+        ],
+        [
+          21,
+          22
+        ],
+        [
+          25,
+          26
+        ]
+      ],
+      "audio_unavailable_positions": 4,
+      "audio_unavailable_fraction": 0.11764705882352941,
+      "audio_unavailable_intervals": [
+        [
+          5,
+          6
+        ],
+        [
+          10,
+          11
+        ],
+        [
+          21,
+          22
+        ],
+        [
+          25,
+          26
+        ]
+      ],
+      "vision_unavailable_positions": 4,
+      "vision_unavailable_fraction": 0.11764705882352941,
+      "vision_unavailable_intervals": [
+        [
+          5,
+          6
+        ],
+        [
+          10,
+          11
+        ],
+        [
+          21,
+          22
+        ],
+        [
+          25,
+          26
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_17",
+      "source_file": "附件3_17.pkl",
+      "source_sha256": "b6c64a55fb8050cb9fda15b0245df8f16b20d2a25d9368485dd1229e213fdba5",
+      "content_positions": 22,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        1,
+        2,
+        3,
+        5,
+        12,
+        15,
+        18,
+        21
+      ],
+      "padding_positions": [
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        23
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 8,
+      "text_unavailable_fraction": 0.36363636363636365,
+      "text_unavailable_intervals": [
+        [
+          1,
+          4
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          12,
+          13
+        ],
+        [
+          15,
+          16
+        ],
+        [
+          18,
+          19
+        ],
+        [
+          21,
+          22
+        ]
+      ],
+      "audio_unavailable_positions": 8,
+      "audio_unavailable_fraction": 0.36363636363636365,
+      "audio_unavailable_intervals": [
+        [
+          1,
+          4
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          12,
+          13
+        ],
+        [
+          15,
+          16
+        ],
+        [
+          18,
+          19
+        ],
+        [
+          21,
+          22
+        ]
+      ],
+      "vision_unavailable_positions": 8,
+      "vision_unavailable_fraction": 0.36363636363636365,
+      "vision_unavailable_intervals": [
+        [
+          1,
+          4
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          12,
+          13
+        ],
+        [
+          15,
+          16
+        ],
+        [
+          18,
+          19
+        ],
+        [
+          21,
+          22
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_18",
+      "source_file": "附件3_18.pkl",
+      "source_sha256": "dc8eb37586b93bdd4debe895041275fdabb94c3392bde667b4e0ccdc6429fab1",
+      "content_positions": 17,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        2,
+        3,
+        5
+      ],
+      "padding_positions": [
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        18
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 3,
+      "text_unavailable_fraction": 0.17647058823529413,
+      "text_unavailable_intervals": [
+        [
+          2,
+          4
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "audio_unavailable_positions": 3,
+      "audio_unavailable_fraction": 0.17647058823529413,
+      "audio_unavailable_intervals": [
+        [
+          2,
+          4
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "vision_unavailable_positions": 3,
+      "vision_unavailable_fraction": 0.17647058823529413,
+      "vision_unavailable_intervals": [
+        [
+          2,
+          4
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_19",
+      "source_file": "附件3_19.pkl",
+      "source_sha256": "d3a912bc3c70b60c1021babc521f28a6a34f9e916c164ad0191182e587c2385a",
+      "content_positions": 24,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        3,
+        4,
+        7,
+        8,
+        13,
+        17,
+        21
+      ],
+      "padding_positions": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        25
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 7,
+      "text_unavailable_fraction": 0.2916666666666667,
+      "text_unavailable_intervals": [
+        [
+          3,
+          5
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          13,
+          14
+        ],
+        [
+          17,
+          18
+        ],
+        [
+          21,
+          22
+        ]
+      ],
+      "audio_unavailable_positions": 7,
+      "audio_unavailable_fraction": 0.2916666666666667,
+      "audio_unavailable_intervals": [
+        [
+          3,
+          5
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          13,
+          14
+        ],
+        [
+          17,
+          18
+        ],
+        [
+          21,
+          22
+        ]
+      ],
+      "vision_unavailable_positions": 7,
+      "vision_unavailable_fraction": 0.2916666666666667,
+      "vision_unavailable_intervals": [
+        [
+          3,
+          5
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          13,
+          14
+        ],
+        [
+          17,
+          18
+        ],
+        [
+          21,
+          22
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_20",
+      "source_file": "附件3_20.pkl",
+      "source_sha256": "bf24c7189bba3904e911dd452266078d8ff15768438a9069e6596ff73a4b925e",
+      "content_positions": 48,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        6,
+        8,
+        9,
+        11,
+        21,
+        26,
+        31,
+        38,
+        39,
+        40,
+        41,
+        43,
+        44,
+        48
+      ],
+      "padding_positions": [],
+      "special_positions": [
+        0,
+        49
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 14,
+      "text_unavailable_fraction": 0.2916666666666667,
+      "text_unavailable_intervals": [
+        [
+          6,
+          7
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          21,
+          22
+        ],
+        [
+          26,
+          27
+        ],
+        [
+          31,
+          32
+        ],
+        [
+          38,
+          42
+        ],
+        [
+          43,
+          45
+        ],
+        [
+          48,
+          49
+        ]
+      ],
+      "audio_unavailable_positions": 14,
+      "audio_unavailable_fraction": 0.2916666666666667,
+      "audio_unavailable_intervals": [
+        [
+          6,
+          7
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          21,
+          22
+        ],
+        [
+          26,
+          27
+        ],
+        [
+          31,
+          32
+        ],
+        [
+          38,
+          42
+        ],
+        [
+          43,
+          45
+        ],
+        [
+          48,
+          49
+        ]
+      ],
+      "vision_unavailable_positions": 14,
+      "vision_unavailable_fraction": 0.2916666666666667,
+      "vision_unavailable_intervals": [
+        [
+          6,
+          7
+        ],
+        [
+          8,
+          10
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          21,
+          22
+        ],
+        [
+          26,
+          27
+        ],
+        [
+          31,
+          32
+        ],
+        [
+          38,
+          42
+        ],
+        [
+          43,
+          45
+        ],
+        [
+          48,
+          49
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_21",
+      "source_file": "附件3_21.pkl",
+      "source_sha256": "c0605bd5757ff0c5dea345c96236ed7168ff976d37843572143efe11d6454600",
+      "content_positions": 9,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        2,
+        4,
+        8
+      ],
+      "padding_positions": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        10
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 3,
+      "text_unavailable_fraction": 0.3333333333333333,
+      "text_unavailable_intervals": [
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "audio_unavailable_positions": 3,
+      "audio_unavailable_fraction": 0.3333333333333333,
+      "audio_unavailable_intervals": [
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "vision_unavailable_positions": 3,
+      "vision_unavailable_fraction": 0.3333333333333333,
+      "vision_unavailable_intervals": [
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          8,
+          9
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_22",
+      "source_file": "附件3_22.pkl",
+      "source_sha256": "6f9dc33f9d3e5680ee3a3b2b0c53b1bac51fb98f1d75375a2cb1224cd7bd4d43",
+      "content_positions": 17,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        7,
+        12,
+        14,
+        16
+      ],
+      "padding_positions": [
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        18
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 4,
+      "text_unavailable_fraction": 0.23529411764705882,
+      "text_unavailable_intervals": [
+        [
+          7,
+          8
+        ],
+        [
+          12,
+          13
+        ],
+        [
+          14,
+          15
+        ],
+        [
+          16,
+          17
+        ]
+      ],
+      "audio_unavailable_positions": 4,
+      "audio_unavailable_fraction": 0.23529411764705882,
+      "audio_unavailable_intervals": [
+        [
+          7,
+          8
+        ],
+        [
+          12,
+          13
+        ],
+        [
+          14,
+          15
+        ],
+        [
+          16,
+          17
+        ]
+      ],
+      "vision_unavailable_positions": 4,
+      "vision_unavailable_fraction": 0.23529411764705882,
+      "vision_unavailable_intervals": [
+        [
+          7,
+          8
+        ],
+        [
+          12,
+          13
+        ],
+        [
+          14,
+          15
+        ],
+        [
+          16,
+          17
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_23",
+      "source_file": "附件3_23.pkl",
+      "source_sha256": "5200bd05e2611777875eb1d88826bb56bb71dee4c708fec9d9f851222d243aae",
+      "content_positions": 13,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        6,
+        10,
+        11,
+        12
+      ],
+      "padding_positions": [
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        14
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 4,
+      "text_unavailable_fraction": 0.3076923076923077,
+      "text_unavailable_intervals": [
+        [
+          6,
+          7
+        ],
+        [
+          10,
+          13
+        ]
+      ],
+      "audio_unavailable_positions": 4,
+      "audio_unavailable_fraction": 0.3076923076923077,
+      "audio_unavailable_intervals": [
+        [
+          6,
+          7
+        ],
+        [
+          10,
+          13
+        ]
+      ],
+      "vision_unavailable_positions": 4,
+      "vision_unavailable_fraction": 0.3076923076923077,
+      "vision_unavailable_intervals": [
+        [
+          6,
+          7
+        ],
+        [
+          10,
+          13
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_24",
+      "source_file": "附件3_24.pkl",
+      "source_sha256": "76b1c126e2043f90afd5af00d51299bc8f5bf1bee8148f5ff904ccbeb931a5e5",
+      "content_positions": 8,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        1,
+        7
+      ],
+      "padding_positions": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        9
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 2,
+      "text_unavailable_fraction": 0.25,
+      "text_unavailable_intervals": [
+        [
+          1,
+          2
+        ],
+        [
+          7,
+          8
+        ]
+      ],
+      "audio_unavailable_positions": 2,
+      "audio_unavailable_fraction": 0.25,
+      "audio_unavailable_intervals": [
+        [
+          1,
+          2
+        ],
+        [
+          7,
+          8
+        ]
+      ],
+      "vision_unavailable_positions": 2,
+      "vision_unavailable_fraction": 0.25,
+      "vision_unavailable_intervals": [
+        [
+          1,
+          2
+        ],
+        [
+          7,
+          8
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_25",
+      "source_file": "附件3_25.pkl",
+      "source_sha256": "88d52e2d0b0229ad6ec638e6e7463f6852f127ae9308fbee1cbc2405d8ebc4c8",
+      "content_positions": 9,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        1,
+        5
+      ],
+      "padding_positions": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        10
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 2,
+      "text_unavailable_fraction": 0.2222222222222222,
+      "text_unavailable_intervals": [
+        [
+          1,
+          2
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "audio_unavailable_positions": 2,
+      "audio_unavailable_fraction": 0.2222222222222222,
+      "audio_unavailable_intervals": [
+        [
+          1,
+          2
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "vision_unavailable_positions": 2,
+      "vision_unavailable_fraction": 0.2222222222222222,
+      "vision_unavailable_intervals": [
+        [
+          1,
+          2
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_26",
+      "source_file": "附件3_26.pkl",
+      "source_sha256": "e483daa1391987552f9ee7f21bffec918dd61267af36885a9ae3073813193234",
+      "content_positions": 22,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        1,
+        5,
+        11,
+        15,
+        16,
+        22
+      ],
+      "padding_positions": [
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        23
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 6,
+      "text_unavailable_fraction": 0.2727272727272727,
+      "text_unavailable_intervals": [
+        [
+          1,
+          2
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          15,
+          17
+        ],
+        [
+          22,
+          23
+        ]
+      ],
+      "audio_unavailable_positions": 6,
+      "audio_unavailable_fraction": 0.2727272727272727,
+      "audio_unavailable_intervals": [
+        [
+          1,
+          2
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          15,
+          17
+        ],
+        [
+          22,
+          23
+        ]
+      ],
+      "vision_unavailable_positions": 6,
+      "vision_unavailable_fraction": 0.2727272727272727,
+      "vision_unavailable_intervals": [
+        [
+          1,
+          2
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          15,
+          17
+        ],
+        [
+          22,
+          23
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_27",
+      "source_file": "附件3_27.pkl",
+      "source_sha256": "27f16bbd4541196bb33f4caa36e038b2ff66fa72649f1b22f2328a5630de37ad",
+      "content_positions": 21,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        2,
+        3,
+        4,
+        7,
+        10,
+        18,
+        20,
+        21
+      ],
+      "padding_positions": [
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        22
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 8,
+      "text_unavailable_fraction": 0.38095238095238093,
+      "text_unavailable_intervals": [
+        [
+          2,
+          5
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          10,
+          11
+        ],
+        [
+          18,
+          19
+        ],
+        [
+          20,
+          22
+        ]
+      ],
+      "audio_unavailable_positions": 8,
+      "audio_unavailable_fraction": 0.38095238095238093,
+      "audio_unavailable_intervals": [
+        [
+          2,
+          5
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          10,
+          11
+        ],
+        [
+          18,
+          19
+        ],
+        [
+          20,
+          22
+        ]
+      ],
+      "vision_unavailable_positions": 8,
+      "vision_unavailable_fraction": 0.38095238095238093,
+      "vision_unavailable_intervals": [
+        [
+          2,
+          5
+        ],
+        [
+          7,
+          8
+        ],
+        [
+          10,
+          11
+        ],
+        [
+          18,
+          19
+        ],
+        [
+          20,
+          22
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_28",
+      "source_file": "附件3_28.pkl",
+      "source_sha256": "81def781fa8fa5aebb555631b59ce48ee71a10c9e4226f1a5b6d91a2078f8f32",
+      "content_positions": 33,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        6,
+        7,
+        10,
+        11,
+        12,
+        21,
+        22,
+        26,
+        27,
+        29,
+        31
+      ],
+      "padding_positions": [
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        34
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 11,
+      "text_unavailable_fraction": 0.3333333333333333,
+      "text_unavailable_intervals": [
+        [
+          6,
+          8
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          21,
+          23
+        ],
+        [
+          26,
+          28
+        ],
+        [
+          29,
+          30
+        ],
+        [
+          31,
+          32
+        ]
+      ],
+      "audio_unavailable_positions": 11,
+      "audio_unavailable_fraction": 0.3333333333333333,
+      "audio_unavailable_intervals": [
+        [
+          6,
+          8
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          21,
+          23
+        ],
+        [
+          26,
+          28
+        ],
+        [
+          29,
+          30
+        ],
+        [
+          31,
+          32
+        ]
+      ],
+      "vision_unavailable_positions": 11,
+      "vision_unavailable_fraction": 0.3333333333333333,
+      "vision_unavailable_intervals": [
+        [
+          6,
+          8
+        ],
+        [
+          10,
+          13
+        ],
+        [
+          21,
+          23
+        ],
+        [
+          26,
+          28
+        ],
+        [
+          29,
+          30
+        ],
+        [
+          31,
+          32
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_29",
+      "source_file": "附件3_29.pkl",
+      "source_sha256": "8caf12e71117bd7334be12aba5af6322fb02a2397f8e2402e75391f4f9ef3686",
+      "content_positions": 18,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        2,
+        7,
+        8,
+        9,
+        10,
+        15,
+        17,
+        18
+      ],
+      "padding_positions": [
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        19
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 8,
+      "text_unavailable_fraction": 0.4444444444444444,
+      "text_unavailable_intervals": [
+        [
+          2,
+          3
+        ],
+        [
+          7,
+          11
+        ],
+        [
+          15,
+          16
+        ],
+        [
+          17,
+          19
+        ]
+      ],
+      "audio_unavailable_positions": 8,
+      "audio_unavailable_fraction": 0.4444444444444444,
+      "audio_unavailable_intervals": [
+        [
+          2,
+          3
+        ],
+        [
+          7,
+          11
+        ],
+        [
+          15,
+          16
+        ],
+        [
+          17,
+          19
+        ]
+      ],
+      "vision_unavailable_positions": 8,
+      "vision_unavailable_fraction": 0.4444444444444444,
+      "vision_unavailable_intervals": [
+        [
+          2,
+          3
+        ],
+        [
+          7,
+          11
+        ],
+        [
+          15,
+          16
+        ],
+        [
+          17,
+          19
+        ]
+      ],
+      "quality_flags": []
+    },
+    {
+      "sample_id": "附件3_30",
+      "source_file": "附件3_30.pkl",
+      "source_sha256": "a6b272abb5d083804b6902054d4180d55d3c1d5822c483967e70e6a9657546d3",
+      "content_positions": 24,
+      "text_missing_policy": "official_aligned_unk_v1",
+      "text_unk_content_positions": [
+        1,
+        4,
+        7,
+        8,
+        9,
+        10,
+        14,
+        18,
+        20,
+        21,
+        22,
+        23
+      ],
+      "padding_positions": [
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "special_positions": [
+        0,
+        25
+      ],
+      "interval_coordinate": "zero-based stored sequence positions; [start,end); not seconds",
+      "missing_provenance": "Unavailable observations; natural extraction failure and imposed A/V loss are not distinguishable",
+      "text_unavailable_positions": 12,
+      "text_unavailable_fraction": 0.5,
+      "text_unavailable_intervals": [
+        [
+          1,
+          2
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          7,
+          11
+        ],
+        [
+          14,
+          15
+        ],
+        [
+          18,
+          19
+        ],
+        [
+          20,
+          24
+        ]
+      ],
+      "audio_unavailable_positions": 12,
+      "audio_unavailable_fraction": 0.5,
+      "audio_unavailable_intervals": [
+        [
+          1,
+          2
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          7,
+          11
+        ],
+        [
+          14,
+          15
+        ],
+        [
+          18,
+          19
+        ],
+        [
+          20,
+          24
+        ]
+      ],
+      "vision_unavailable_positions": 12,
+      "vision_unavailable_fraction": 0.5,
+      "vision_unavailable_intervals": [
+        [
+          1,
+          2
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          7,
+          11
+        ],
+        [
+          14,
+          15
+        ],
+        [
+          18,
+          19
+        ],
+        [
+          20,
+          24
+        ]
+      ],
+      "quality_flags": []
+    }
+  ],
+  "n_predictions": 30,
+  "note": "New method experiment; no attachment3 labels available. Original MLP outputs are retained separately."
+}

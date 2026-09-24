@@ -1,0 +1,12 @@
+{
+  "pdf_pages": 33,
+  "headings": 72,
+  "tables": 16,
+  "figures": 11,
+  "equations": 34,
+  "raw_sample_rows": 100,
+  "attachment3_prediction_rows": 30,
+  "author_metadata_empty": true,
+  "page_bounds_check_passed": true,
+  "visual_review": "33页缩略图及主要公式页面已人工检查；修复监督损失下标转换问题"
+}

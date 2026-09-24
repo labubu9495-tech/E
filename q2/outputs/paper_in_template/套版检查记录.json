@@ -1,0 +1,15 @@
+{
+  "pdf_pages": 43,
+  "main_text_first_pdf_page": 5,
+  "body_tables": 21,
+  "cover_tables": 1,
+  "body_figures": 12,
+  "cover_graphics": 3,
+  "editable_equations": 48,
+  "toc_entries": 48,
+  "source_text_preserved": true,
+  "source_tables_preserved": true,
+  "toc_page_numbers_verified": true,
+  "pdf_bounds_passed": true,
+  "pdf_no_error_glyphs": true
+}

@@ -1,0 +1,15 @@
+{
+  "original_outputs_unchanged": true,
+  "all_classifiers_converged": true,
+  "selected_family": "pooled_linear",
+  "elapsed_seconds": 852.6215264797211,
+  "train_samples": 3395,
+  "validation_samples": 728,
+  "test_labels_used": false,
+  "attachment3_used_for_selection": false,
+  "feature_unit_tests_passed": 2,
+  "classification_fits": 36,
+  "regression_fits": 18,
+  "figure_count": 6,
+  "new_special_predictions": 30
+}

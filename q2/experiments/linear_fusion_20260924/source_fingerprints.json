@@ -1,0 +1,12 @@
+{
+  "protocol_sha256": "4013ec7c26f9c6ccea5ca1d4b6dda04d153bdb9b125dafed4cb31a7cd1ac68fc",
+  "protected": {
+    "selection.json": "9a2f86f939e15aeed5619bcd6142730b366a0faa4a22e0464b5705f2e1a19a74",
+    "results/attachment3_predictions.csv": "44e5cd86cdaa5c713c7253a4d7fccc59d38f0ed60fa98605b3bf823460084572",
+    "results/selected_validation_predictions.npz": "f72085a49a7fb046d00132ee8e14c9919f4531910c74d602ce79d4f59b832db9"
+  },
+  "code_sha256": {
+    "features.py": "43141e62695721250d2fece6b9c6defe100ca095e4e2b843c85e6576c469c572",
+    "run.py": "26a009ec4612a6e851fa68c4d6358840693814564f3f780bed17164eba57bc58"
+  }
+}

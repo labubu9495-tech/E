@@ -1,0 +1,204 @@
+{
+  "scope": "写作与描述统计使用的冻结来源；无新增训练或专项真值",
+  "sources": [
+    {
+      "path": "data.py",
+      "bytes": 10813,
+      "sha256": "f4296110e1b01e1e6bd23a2cb6f53af264991e4ad1c4d8a530d2ef6f3ef3e854"
+    },
+    {
+      "path": "models.py",
+      "bytes": 4956,
+      "sha256": "c26a68f9dabd0dde9e3fd71ddcf355b39c81ce3569c126f310f0065639758205"
+    },
+    {
+      "path": "train.py",
+      "bytes": 8933,
+      "sha256": "5870c47336c79444a0573078ec1a1eb8fe2fe9ba93ab7795b60eb6a8581453c8"
+    },
+    {
+      "path": "test_invariants.py",
+      "bytes": 5716,
+      "sha256": "87d0adef5f2580a7a16e9150bb1bc83bd731a601ac2b9e1f0b48b6ab798b4e04"
+    },
+    {
+      "path": "protocol.json",
+      "bytes": 5225,
+      "sha256": "acd537d1efb7edf69aa8459882d6661f6d8960c7f576a2ce9db2cbc10aaba2f9"
+    },
+    {
+      "path": "results/audit.json",
+      "bytes": 10437,
+      "sha256": "1a165cddf9eff8446105912f4d1dbb40bb97266235decee82e3b7d3d4d70f4d6"
+    },
+    {
+      "path": "results/runtime_versions.json",
+      "bytes": 177,
+      "sha256": "4d528c6668404ce333cabdc77d75098df9c6d067e469f9be4b60264b02736875"
+    },
+    {
+      "path": "results/constant_baseline.json",
+      "bytes": 308,
+      "sha256": "43f68e0cc61b6cd43c2fc0fcdd361858ac4c8336853c9072fa11627f82ae0442"
+    },
+    {
+      "path": "results/attachment_code_audit/raw_input_checks.json",
+      "bytes": 90835,
+      "sha256": "8a2c0ddaa776333c57f9e770c6185892aadd5b04421cf818d026aecbecac8e0f"
+    },
+    {
+      "path": "results/screenshot_recheck/evidence.json",
+      "bytes": 34035,
+      "sha256": "404c82253c1e65414d68e5da515a69e4275563224f62a07ce37ba1702c05c168"
+    },
+    {
+      "path": "outputs/paper_chapters_1_5/raw100_inventory.json",
+      "bytes": 59190,
+      "sha256": "32e22b97151c088e8d95f5b0543221a70ee8bfe5aaedcd126a18cb8931cc1225"
+    },
+    {
+      "path": "experiments/paper_baselines_20260924/paper_models.py",
+      "bytes": 13125,
+      "sha256": "90f550a4afe26dc7d950b0d565e8f4236232df05c532534f9656dca9cab7e892"
+    },
+    {
+      "path": "experiments/paper_baselines_20260924/run_experiments.py",
+      "bytes": 10418,
+      "sha256": "77fcf54d489621c27fe0ffd5e28bda5e39fd1162b91937d43f2c6d9a98b89b6c"
+    },
+    {
+      "path": "experiments/paper_baselines_20260924/test_paper_models.py",
+      "bytes": 4895,
+      "sha256": "3fc1676f79a1c31c0ce2a2ae739aabc82c4d25203298d8acfe60e9973e028164"
+    },
+    {
+      "path": "experiments/paper_baselines_20260924/SOURCES.md",
+      "bytes": 5683,
+      "sha256": "d6a3d56d31ef220bfc1ff888a4774700fe2d98355d00a1c7171a34454a013257"
+    },
+    {
+      "path": "experiments/paper_baselines_20260924/protocol.json",
+      "bytes": 7120,
+      "sha256": "42a27941ea65ecc0abe0ad4582def664d5ab606a4cce473c904c966b470ec1c6"
+    },
+    {
+      "path": "experiments/paper_baselines_20260924/selection.json",
+      "bytes": 7579,
+      "sha256": "dcfdc45bb1536a044fe4d479f6435cb7b01d0e261a044dd9b8efaf09d6bde8d7"
+    },
+    {
+      "path": "experiments/paper_baselines_20260924/seed_summary.csv",
+      "bytes": 2933,
+      "sha256": "a5e550c88f3b0323c31f6da8673749ce53adb3fbb1aec7625d0ea56933722a4e"
+    },
+    {
+      "path": "experiments/paper_baselines_20260924/resource_usage.csv",
+      "bytes": 704,
+      "sha256": "5ccc8d18970de42566edc2c362349a52adf1b863c239fc8fb795825cb08af227"
+    },
+    {
+      "path": "experiments/paper_baselines_20260924/paired_bootstrap.json",
+      "bytes": 841,
+      "sha256": "834a81bcd238a8d36a9987ecd96a49d83312d6a04e50f4a1e5974700d6bd8b0d"
+    },
+    {
+      "path": "experiments/paper_baselines_20260924/attachment3_overall_predictions.csv",
+      "bytes": 3075,
+      "sha256": "8276230a5cf0c566334c27b8a93a0660bb7abb468d5859b2807f51fcff561be1"
+    },
+    {
+      "path": "experiments/paper_baselines_20260924/roundtrip_verification.json",
+      "bytes": 1732,
+      "sha256": "c0b4b38498ff76386951fb3d8c1eaeed812cb9f541a35fa5d93c8e45861f6ac9"
+    },
+    {
+      "path": "experiments/paper_baselines_20260924/package_reproduction_check.json",
+      "bytes": 426,
+      "sha256": "fefcd4d5e1367740e91e45223bc69fde96c0e3e026c824fd3f350f439ea0d25c"
+    },
+    {
+      "path": "experiments/paper_baselines_20260924/state_aug_ensemble_metrics.json",
+      "bytes": 12589,
+      "sha256": "6f564b152ef844845f9fbdf1b877f5e202da267671b347e9d713eeebc9eb1738"
+    },
+    {
+      "path": "experiments/paper_baselines_20260924/emt_no_restore_ensemble_metrics.json",
+      "bytes": 12575,
+      "sha256": "7834b9885bc60fbe21daa90d8c9aa3b99a3cbd3adfbf1ad5bf3008ef8af260ec"
+    },
+    {
+      "path": "experiments/paper_baselines_20260924/mlp_ensemble_metrics.json",
+      "bytes": 12582,
+      "sha256": "8ff48de5a958cfcc5f912a8730133fb2674e394f7ab83acef53a4b2e4add3d66"
+    },
+    {
+      "path": "experiments/paper_baselines_20260924/mult_ensemble_metrics.json",
+      "bytes": 12583,
+      "sha256": "4ce062d72d1d554f5ee92e58f99a4932474e4e4ada0bd2d917decb26b3da7fad"
+    },
+    {
+      "path": "experiments/paper_baselines_20260924/emt_dlfr_ensemble_metrics.json",
+      "bytes": 12574,
+      "sha256": "28a03ec9662beb9d8c95cbbf403617a4fcc3e1aa7229bbe397dc9b2fe40a68a6"
+    },
+    {
+      "path": "experiments/paper_baselines_20260924/emt_no_restore_ensemble_predictions.npz",
+      "bytes": 447046,
+      "sha256": "8664946176f4381aa13277523c11f4086bef05ada301491710bb9bb9883631bf"
+    },
+    {
+      "path": "experiments/paper_baselines_20260924/mlp_ensemble_predictions.npz",
+      "bytes": 447046,
+      "sha256": "f72085a49a7fb046d00132ee8e14c9919f4531910c74d602ce79d4f59b832db9"
+    },
+    {
+      "path": "experiments/paper_baselines_20260924/mult_ensemble_predictions.npz",
+      "bytes": 447046,
+      "sha256": "f0b331db08b3de8569194616365ee00151c4a735df41c54499101c39caf58ad8"
+    },
+    {
+      "path": "experiments/paper_baselines_20260924/emt_dlfr_ensemble_predictions.npz",
+      "bytes": 447046,
+      "sha256": "842671a43d41fd3da6c5df107316fd3d9538453e35871c2a08ea381170d60404"
+    },
+    {
+      "path": "experiments/paper_baselines_20260924/state_aug_ensemble_predictions.npz",
+      "bytes": 447046,
+      "sha256": "4e8d91fd8e13f1d48a41a75f7a9751c3764065e9e55958763d17b82bcbe820d9"
+    },
+    {
+      "path": "experiments/linear_fusion_20260924/pooled_linear_metrics.json",
+      "bytes": 12590,
+      "sha256": "75580a871b3209ab1dea8be8ce192f99fb9763c04f232773d0c16b6b5757ca31"
+    },
+    {
+      "path": "experiments/linear_fusion_20260924/lexical_multimodal_linear_metrics.json",
+      "bytes": 12576,
+      "sha256": "5bbc418dba8771d2aa48b4815dfcc92048c11806bc7ef8d86a65a5bf80331d4e"
+    },
+    {
+      "path": "runs/state_aug_seed17/metrics.json",
+      "bytes": 14321,
+      "sha256": "6b7fecce9b77eab370e060bf008a844618adb10e14c973d5c36361bc8ba03f3d"
+    },
+    {
+      "path": "runs/state_clean_seed17/metrics.json",
+      "bytes": 14323,
+      "sha256": "df087a2861c7ecbf0309e16642d8c008396c81216226656dd5bd93638c438129"
+    },
+    {
+      "path": "runs/state_no_gap_seed17/metrics.json",
+      "bytes": 14316,
+      "sha256": "6d407e1f60e14d9cfa3c6d8ed5aa4b8788dc1f39d3bda1b1ade97d4930a90675"
+    },
+    {
+      "path": "runs/state_no_history_seed17/metrics.json",
+      "bytes": 14325,
+      "sha256": "9f4d5241a1ab644661fa7218f752dd8c3af100bf694d0a8bb009ab20c90aec28"
+    }
+  ],
+  "task_statement": {
+    "path": "E题/复杂场景下多模态情感识别的数学建模与算法设计.docx",
+    "sha256": "38cec978723bff36ab945fa98f6454558bb9084e2cd01d814dd6e38ab4b4c336"
+  }
+}

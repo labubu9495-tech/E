@@ -515,7 +515,7 @@ class Atlas:
 
     def special_figures(self):
         df=self.special.copy();pcols=['probability_negative','probability_neutral','probability_positive'];p=df[pcols].to_numpy()
-        note='附件3：30条无标签样本｜仅展示预测，不报告准确率或正确性'
+        note='附件3：30条无标签样本｜2026-09-24已修正UNK掩码｜仅展示预测'
         fig,axes=self.fig('附件3：预测类别与强度分布','最终MLP三种子集成 · 30条专项样本 · 无真实标签',ncols=2)
         counts=np.bincount(df.polarity,minlength=3);bars=axes[0].bar(CLASS_NAMES,counts,color=CLASS_COLORS);axes[0].bar_label(bars,padding=3);axes[0].set(ylabel='预测样本数',ylim=(0,max(counts)*1.25));axes[0].grid(axis='y')
         axes[1].hist(df.intensity,bins=np.linspace(-3,3,19),color='#176B87');axes[1].axvline(0,color='#A85678',ls='--');axes[1].set(xlabel='预测情感强度',ylabel='样本数');axes[1].grid(axis='y')
@@ -568,7 +568,7 @@ class Atlas:
             fig,axes=self.fig(f'附件3预测卡片 · {r.sample_id}','无真实标签 · 保留模型原始输出 · 最终MLP三种子集成',ncols=2,size=(10.8,5.5))
             bars=axes[0].bar(CLASS_NAMES,p,color=CLASS_COLORS);axes[0].bar_label(bars,fmt='%.3f',padding=4);axes[0].set(ylim=(0,1.1),ylabel='预测概率');axes[0].grid(axis='y')
             axes[1].axis('off');axes[1].text(.08,.9,f'预测类别：{CLASS_NAMES[r.polarity]}\n\n预测强度：{r.intensity:+.4f}\n\n最大类别概率：{p.max():.3f}\n\n归一化预测熵：{ent:.3f}',transform=axes[1].transAxes,fontsize=15,va='top',linespacing=1.4)
-            self.save(fig,f'附件3预测卡片 · {r.sample_id}','附件3样本卡片','只展示预测结果及输出集中程度，不能据此判断该样本是否预测正确。',[r._asdict()], 'attachment3_predictions.csv',f'附件3样本_{i+1:02d}',card=True,note='附件3无标签｜预测概率未经校准｜本卡片不构成正确性评价')
+            self.save(fig,f'附件3预测卡片 · {r.sample_id}','附件3样本卡片','只展示预测结果及输出集中程度，不能据此判断该样本是否预测正确。',[r._asdict()], 'attachment3_predictions.csv',f'附件3样本_{i+1:02d}',card=True,note='附件3无标签｜2026-09-24已修正UNK掩码｜预测概率未经校准')
 
     def finish(self,before):
         self.pdf.close();self.card_pdf.close();entries=self.entries+self.card_entries
@@ -576,6 +576,7 @@ class Atlas:
         recommended=[e for e in self.entries if any(s in e['stem'] for s in ['结果总览','类别分布','选模条件模型对比','递推消融','混淆矩阵_比例','回归散点','强度分层误差','集成缺失热图_macro_f1','缺失相对变化_mae','配对Bootstrap','附件3概率热图'])]
         notes=['# 第二问可视化图集', '',f'包含 {len(self.entries)} 张分析图、{len(self.card_entries)} 张样本卡片。每图导出300 dpi PNG、可编辑文字SVG和绘图数据CSV；分析图与卡片分别汇入PDF。','',
             '## 使用范围','', '所有图基于已有真实运行结果生成，没有重新训练、重选模型或修改预测。附件2验证集参与模型选择，图中指标仅代表开发验证结果；未评价附件2 test。附件3没有标签，只能展示预测。', '',
+            '2026-09-24更新：附件3图表和卡片已使用修正UNK缺失掩码后的预测；旧版本归档。验证集图表和冻结模型权重未变。','',
             '误差条如无另外说明均为3个随机种子的样本标准差，不是置信区间。单种子消融明确标注。Bootstrap图区间复用原有按视频组重采样的结果。模型种子指标均值与平均预测后的集成指标分开报告。','',
             '缺失比例描述序列位置，不代表秒数；填充、特殊标记与内容内不可用位置分开处理。音视频内容内零行按操作规则标为不可用，不据此断言真实缺失原因。预测概率未经校准。','',
             '## 建议优先用于论文的图','']

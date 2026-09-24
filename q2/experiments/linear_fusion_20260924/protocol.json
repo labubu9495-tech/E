@@ -1,0 +1,57 @@
+{
+  "purpose": "Alternative methods after initial MLP experiments; development validation comparison, not independent test evidence",
+  "input": "Same aligned text_bert/audio/vision and official train/valid; same frozen BERT-Mini and masks",
+  "families": [
+    "pooled_linear",
+    "lexical_multimodal_linear"
+  ],
+  "features": "Per-modality masked mean and standard deviation; observed content fractions. Hybrid adds train-fitted TF-IDF of visible WordPiece unigrams/bigrams without bridging gaps.",
+  "train_feature_scaler": "Fit on original train only, separately divide each modality block by sqrt(number of features).",
+  "tfidf": {
+    "min_df": 2,
+    "max_features": 12000,
+    "sublinear_tf": true,
+    "weight": 3.0
+  },
+  "classification": {
+    "model": "LogisticRegression",
+    "C": [
+      0.1,
+      1.0,
+      10.0
+    ],
+    "class_weight": [
+      null,
+      "balanced"
+    ],
+    "max_iter": 1000
+  },
+  "regression": {
+    "model": "Ridge",
+    "alpha": [
+      10.0,
+      100.0,
+      1000.0
+    ],
+    "clip": [
+      -3,
+      3
+    ]
+  },
+  "seeds": [
+    17,
+    29,
+    43
+  ],
+  "augmentation": "One clean view weight .4 plus four missing views weight .15 each; missing views single modality probability 2/3, double modality 1/3; blocks .1-.5; text uses same pre-BERT eight-view cache.",
+  "regressor_selection": "Minimum mean validation MAE across same four conditions and three seeds, within family",
+  "classifier_selection": "Maximum mean macro-F1 across same four conditions and three seeds; regression MAE breaks ties",
+  "selection_conditions": [
+    "clean",
+    "text_30_middle",
+    "audio_30_middle",
+    "vision_30_middle"
+  ],
+  "final_evaluation": "Same 32 conditions; three-seed probability/intensity ensemble compared with old frozen MLP ensemble",
+  "forbidden_feedback": "No attachment2 test labels; no attachment3 distribution or outputs used for choosing hyperparameters; no external emotion training data."
+}

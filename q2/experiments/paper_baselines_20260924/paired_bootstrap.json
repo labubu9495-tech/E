@@ -1,0 +1,33 @@
+{
+  "best_paper": "emt_dlfr",
+  "versus": "mlp",
+  "results": {
+    "clean": {
+      "f1_difference": 0.014480045372953443,
+      "f1_ci95": [
+        -0.01650723401358457,
+        0.044229873470100496
+      ],
+      "mae_difference": -0.02401195466518402,
+      "mae_ci95": [
+        -0.046567111648619174,
+        -0.0014453814947046548
+      ],
+      "video_groups": 239
+    },
+    "text_30_middle": {
+      "f1_difference": 0.0009104970129787393,
+      "f1_ci95": [
+        -0.02571844777928727,
+        0.029843091004578336
+      ],
+      "mae_difference": -0.021177824586629868,
+      "mae_ci95": [
+        -0.04223482450470328,
+        -0.00096440838824492
+      ],
+      "video_groups": 239
+    }
+  },
+  "note": "Development validation group bootstrap; does not remove model-selection bias or establish independent generalization."
+}

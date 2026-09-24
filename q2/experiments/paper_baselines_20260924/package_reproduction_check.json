@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "n_predictions": 30,
+  "csv_byte_identical": true,
+  "provenance_byte_identical": true,
+  "prediction_sha256": "8276230a5cf0c566334c27b8a93a0660bb7abb468d5859b2807f51fcff561be1",
+  "package_sha256": "3b7bfc7f80b2c27a25af6e03ead013ded70c1e71b5785c7d7ab0c6d0d5d9fdb7",
+  "scope": "Fresh temporary extraction, CPU inference against original official attachment3 input; existing Python environment reused."
+}

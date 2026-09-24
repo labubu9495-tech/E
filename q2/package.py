@@ -12,11 +12,16 @@ def main():
     requirements='\n'.join(f'{name}=={v.split("+")[0]}' for name,v in versions.items())+'\n'
     (ROOT/'requirements.txt').write_text(requirements)
     selection=json.loads((ROOT/'selection.json').read_text())
-    paths=list(ROOT.glob('*.py'))+[ROOT/'README.md',ROOT/'method.md',ROOT/'requirements.txt',ROOT/'protocol.json',ROOT/'selection.json',ROOT/'assets'/'normalization.npz']
+    # Keep the large visualization atlas and its optional pandas/Pillow plotting
+    # tool separate from the competition inference/training runtime.
+    paths=[p for p in ROOT.glob('*.py') if p.name!='visualize_results.py']+[ROOT/'README.md',ROOT/'method.md',ROOT/'requirements.txt',ROOT/'protocol.json',ROOT/'selection.json',ROOT/'assets'/'normalization.npz']
     paths += [p for p in (ROOT/'assets'/'bert-mini').iterdir() if p.suffix in ['.json','.txt','.safetensors']]
     paths += [ROOT/p for p in selection['checkpoints']]
     paths += [p for p in (ROOT/'results').iterdir() if p.suffix in ['.csv','.json','.md']]
     paths += list((ROOT/'results'/'figures').glob('*.png'))
+    paths += [p for p in (ROOT/'results'/'attachment_code_audit').glob('*.json')
+              if not p.name.endswith('.partial.json') and not p.name.startswith('attachment3_predictions_corrected')]
+    paths += list((ROOT/'results'/'attachment_code_audit').glob('*comparison.csv'))
     manifest={str(p.relative_to(ROOT)):dict(bytes=p.stat().st_size,sha256=sha256(p)) for p in paths}
     dump_json(ROOT/'submission_manifest.json',manifest)
     paths += [ROOT/'submission_manifest.json']

@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "model_tests": 5,
+  "prior_adapter_tests": 10,
+  "source_sha256": {
+    "paper_models.py": "90f550a4afe26dc7d950b0d565e8f4236232df05c532534f9656dca9cab7e892",
+    "run_experiments.py": "77fcf54d489621c27fe0ffd5e28bda5e39fd1162b91937d43f2c6d9a98b89b6c",
+    "test_paper_models.py": "3fc1676f79a1c31c0ce2a2ae739aabc82c4d25203298d8acfe60e9973e028164",
+    "protocol.json": "42a27941ea65ecc0abe0ad4582def664d5ab606a4cce473c904c966b470ec1c6"
+  },
+  "smoke": {
+    "mult": {
+      "seconds": 19.222234758082777,
+      "parameters": 1072954,
+      "peak_allocated_bytes": 1690483200
+    },
+    "emt_dlfr": {
+      "seconds": 4.98401286592707,
+      "parameters": 1131394,
+      "peak_allocated_bytes": 1808827392
+    }
+  },
+  "data_policy": "Verified common protocol and source hashes; existing raw/cache recheck passed before this experiment"
+}

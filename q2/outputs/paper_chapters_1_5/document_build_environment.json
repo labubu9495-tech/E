@@ -1,0 +1,13 @@
+{
+  "purpose": "文档生成与原始媒体清单核查环境；不代表问题一特征提取工具已运行",
+  "python": "3.13.11",
+  "packages": {
+    "python-docx": "1.2.0",
+    "openpyxl": "3.1.5",
+    "numpy": "2.5.0",
+    "matplotlib": "3.10.9",
+    "pillow": "12.0.0"
+  },
+  "ffprobe": "ffprobe version 4.4.2-0ubuntu0.22.04.1 Copyright (c) 2007-2021 the FFmpeg developers",
+  "libreoffice": "LibreOffice 7.3.7.2 30(Build:2)"
+}

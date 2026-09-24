@@ -1,0 +1,31 @@
+{
+  "results": {
+    "clean": {
+      "macro_f1_new_minus_old": -0.0006263659001032318,
+      "macro_f1_ci95": [
+        -0.030728287804533672,
+        0.028353523465626185
+      ],
+      "mae_new_minus_old": 0.022104376075924876,
+      "mae_ci95": [
+        0.004158132540666275,
+        0.04052922066256511
+      ],
+      "video_groups": 239
+    },
+    "text_30_middle": {
+      "macro_f1_new_minus_old": -0.021388517656282025,
+      "macro_f1_ci95": [
+        -0.05084562617945079,
+        0.008507370492969202
+      ],
+      "mae_new_minus_old": 0.01661269722785487,
+      "mae_ci95": [
+        -0.0011537186244033797,
+        0.035178530650596875
+      ],
+      "video_groups": 239
+    }
+  },
+  "note": "Paired video-group bootstrap on model-selection validation; cannot remove selection bias or establish independent generalization."
+}

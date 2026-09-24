@@ -196,6 +196,9 @@ def main():
         f'完整输入中，中性类召回率为{error_summary["neutral"]["accuracy"]:.2%}，低于负向{error_summary["negative"]["accuracy"]:.2%}与正向{error_summary["positive"]["accuracy"]:.2%}；{cm[1,2]}/{cm[1].sum()}条中性被预测为正向。中性区分是当前主要分类瓶颈。',
         f'弱非零强度样本(|y|≤0.5且y≠0)共{error_summary["weak_nonzero"]["n"]}条，准确率{error_summary["weak_nonzero"]["accuracy"]:.2%}。分类与回归正负符号冲突共{error_summary["sign_conflict_count"]}/{len(y)}条；双头输出并非自动一致。',
         'state相对GRU的配对回归误差差值见bootstrap文件。完整输入区间若跨零，不能宣称改进稳定；文本缺失条件下差值为正表示state误差更大。保留负结果，当前不把递推或缺失长度提示写成已验证优势。','']
+    if (results/'代码附件核查报告.md').exists():
+        lines += ['## 输入处理修正核查','',
+            '2026-09-24对照附件审计修正了专项输入中[UNK]被当作有效文本的问题。train/valid缓存和验证结果不变；附件3已按修正后的规则重新推理。详细影响、适用边界及前后对比见[代码附件核查报告](代码附件核查报告.md)。','']
     (results/'第二问实测报告.md').write_text('\n'.join(lines))
     print(json.dumps(dict(selected=winner,clean=clean),ensure_ascii=False,indent=2),flush=True)
 

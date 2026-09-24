@@ -9,6 +9,7 @@
 - 文本词表是uncased BERT，冻结编码器为`google/bert_uncased_L-4_H-256_A-4`；精确revision与权重格式见`assets/bert-mini/source.json`。
 - 不使用附件2预计算text训练后再切换文本表示。text_bert统一经本地冻结编码器，生成256维文本表示。
 - SEP确定真实内容范围，CLS、SEP与padding不参加时序池化。文本内部零区间保留位置；音视频在内容范围内的有限非零行作为操作性可用观测。全零行的真实成因未知。
+- 官方对齐附件中的内容token 100（`[UNK]`）按不可用文本处理，保留该序列位置；编码前清除其token/attention/segment，编码后再屏蔽。此规则由附件核验支持，不把通用BERT的所有未知词都定义为缺失。`adapt(..., text_missing_policy='ordinary_unk')`仅用于明确需要普通UNK语义的其他数据或历史对比。
 - 若专项样本缺少SEP，以最末可见支持估计终点，标记`observed_support_approximate`；不能恢复完全无观测的真实尾长。
 - 缺失长度按内容序列位置数及比例定义，不解释为秒数；取整后的实际位置数可能不同于目标比例。
 
@@ -44,7 +45,9 @@ python train.py --config state_aug --seed 17 --device cpu
 
 主要候选mlp、gru_clean、gru_aug、state_aug、smooth_aug各运行17/29/43三个种子；其余对照单种子。无增强GRU在首轮验证后补齐重复并纳入候选，未使用专项测试信息。各次模型选择使用clean与text/audio/vision的30%-middle四个条件平均Macro-F1，MAE打破平局。结构也按同一规则的种子均值选择，最后对三种子平均类别概率和强度。验证集用于模型选择，因此全部验证表现属于开发评价，不是独立测试结果。
 
-本实现未运行LMF/MulT，不能据此声称超过文献方法。
+首版实验未运行论文基线。2026-09-24已在独立目录完成MulT、EMT-DLFR和EMT去恢复约束各3个种子的赛题适配实验，见[论文方法实测报告](experiments/paper_baselines_20260924/论文方法实测报告.md)。LMF仍未运行；这些不是原论文数据与设置的完全复现。
+
+新增实验按原四条件、三种子指标均值规则选中EMT-DLFR，选择记录和30条专项预测位于`experiments/paper_baselines_20260924/selection.json`及`attachment3_overall_predictions.csv`。根目录`selection.json`、`infer.py`和`results/attachment3_predictions.csv`保留首版MLP结果，便于追溯；运行新增选择请使用该目录的`infer_selected.py`。去恢复约束变体的集成指标也较好，不能据此宣称恢复约束稳定有效。新复现包为`results/第二问论文实验选定模型_复现包.zip`，同样只覆盖第二问。
 
 ## 冻结后的附件3推理
 
@@ -65,7 +68,9 @@ CSV字段：
 |intensity|连续强度[-3,3]|
 |probability_negative / probability_neutral / probability_positive|三分类概率，用于复核|
 
-题面未提供固定列名模板，以上是本项目明确约定的格式；若后续发布模板，做字段映射而不改预测。`*.provenance.json`记录源文件、样本行和端点规则。不能给无标签附件3报告Accuracy/F1/MAE/Pearson。
+题面未提供固定列名模板，以上是本项目明确约定的格式；若后续发布模板，做字段映射而不改预测。输入文件按自然编号排序。推理加载时核对冻结检查点哈希。`*.provenance.json`记录源文件哈希、样本行、端点规则、预处理版本、内容长度、各模态不可用比例/区间及质量标记。区间使用原始50位置数组的0起始半开区间`[start,end)`，不是秒数；分母只用内容位置。不能给无标签附件3报告Accuracy/F1/MAE/Pearson。
+
+2026-09-24附件核查发现旧版遗漏了上述UNK规则。修正前结果已归档，当前CSV按新规则重新推理；权重和选模规则不因附件3输出变化而调整。修正影响及完整证据见`results/代码附件核查报告.md`。第一问特征提取、未对齐视觉长度纠错、第三问时间映射不属于本第二问程序已完成的功能。
 
 ## 结果与交付
 

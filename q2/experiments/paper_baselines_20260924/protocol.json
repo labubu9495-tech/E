@@ -1,0 +1,325 @@
+{
+  "encoder": "google/bert_uncased_L-4_H-256_A-4",
+  "feature_version": "aligned_50",
+  "seed_list": [
+    17,
+    29,
+    43
+  ],
+  "batch_size": 64,
+  "max_epochs": 40,
+  "patience": 6,
+  "selection": "Maximum mean macro-F1 on clean plus T/A/V 30%-middle validation; tie-break lower average MAE. Selection validation is not independent test evidence.",
+  "conditions": [
+    {
+      "name": "clean",
+      "modalities": [],
+      "ratio": 0.0,
+      "location": "none"
+    },
+    {
+      "name": "text_10_front",
+      "modalities": [
+        0
+      ],
+      "ratio": 0.1,
+      "location": "front"
+    },
+    {
+      "name": "text_10_middle",
+      "modalities": [
+        0
+      ],
+      "ratio": 0.1,
+      "location": "middle"
+    },
+    {
+      "name": "text_10_back",
+      "modalities": [
+        0
+      ],
+      "ratio": 0.1,
+      "location": "back"
+    },
+    {
+      "name": "text_30_front",
+      "modalities": [
+        0
+      ],
+      "ratio": 0.3,
+      "location": "front"
+    },
+    {
+      "name": "text_30_middle",
+      "modalities": [
+        0
+      ],
+      "ratio": 0.3,
+      "location": "middle"
+    },
+    {
+      "name": "text_30_back",
+      "modalities": [
+        0
+      ],
+      "ratio": 0.3,
+      "location": "back"
+    },
+    {
+      "name": "text_50_front",
+      "modalities": [
+        0
+      ],
+      "ratio": 0.5,
+      "location": "front"
+    },
+    {
+      "name": "text_50_middle",
+      "modalities": [
+        0
+      ],
+      "ratio": 0.5,
+      "location": "middle"
+    },
+    {
+      "name": "text_50_back",
+      "modalities": [
+        0
+      ],
+      "ratio": 0.5,
+      "location": "back"
+    },
+    {
+      "name": "audio_10_front",
+      "modalities": [
+        1
+      ],
+      "ratio": 0.1,
+      "location": "front"
+    },
+    {
+      "name": "audio_10_middle",
+      "modalities": [
+        1
+      ],
+      "ratio": 0.1,
+      "location": "middle"
+    },
+    {
+      "name": "audio_10_back",
+      "modalities": [
+        1
+      ],
+      "ratio": 0.1,
+      "location": "back"
+    },
+    {
+      "name": "audio_30_front",
+      "modalities": [
+        1
+      ],
+      "ratio": 0.3,
+      "location": "front"
+    },
+    {
+      "name": "audio_30_middle",
+      "modalities": [
+        1
+      ],
+      "ratio": 0.3,
+      "location": "middle"
+    },
+    {
+      "name": "audio_30_back",
+      "modalities": [
+        1
+      ],
+      "ratio": 0.3,
+      "location": "back"
+    },
+    {
+      "name": "audio_50_front",
+      "modalities": [
+        1
+      ],
+      "ratio": 0.5,
+      "location": "front"
+    },
+    {
+      "name": "audio_50_middle",
+      "modalities": [
+        1
+      ],
+      "ratio": 0.5,
+      "location": "middle"
+    },
+    {
+      "name": "audio_50_back",
+      "modalities": [
+        1
+      ],
+      "ratio": 0.5,
+      "location": "back"
+    },
+    {
+      "name": "vision_10_front",
+      "modalities": [
+        2
+      ],
+      "ratio": 0.1,
+      "location": "front"
+    },
+    {
+      "name": "vision_10_middle",
+      "modalities": [
+        2
+      ],
+      "ratio": 0.1,
+      "location": "middle"
+    },
+    {
+      "name": "vision_10_back",
+      "modalities": [
+        2
+      ],
+      "ratio": 0.1,
+      "location": "back"
+    },
+    {
+      "name": "vision_30_front",
+      "modalities": [
+        2
+      ],
+      "ratio": 0.3,
+      "location": "front"
+    },
+    {
+      "name": "vision_30_middle",
+      "modalities": [
+        2
+      ],
+      "ratio": 0.3,
+      "location": "middle"
+    },
+    {
+      "name": "vision_30_back",
+      "modalities": [
+        2
+      ],
+      "ratio": 0.3,
+      "location": "back"
+    },
+    {
+      "name": "vision_50_front",
+      "modalities": [
+        2
+      ],
+      "ratio": 0.5,
+      "location": "front"
+    },
+    {
+      "name": "vision_50_middle",
+      "modalities": [
+        2
+      ],
+      "ratio": 0.5,
+      "location": "middle"
+    },
+    {
+      "name": "vision_50_back",
+      "modalities": [
+        2
+      ],
+      "ratio": 0.5,
+      "location": "back"
+    },
+    {
+      "name": "audio_vision_30_sync",
+      "modalities": [
+        1,
+        2
+      ],
+      "ratio": 0.3,
+      "location": "middle"
+    },
+    {
+      "name": "text_audio_30_sync",
+      "modalities": [
+        0,
+        1
+      ],
+      "ratio": 0.3,
+      "location": "middle"
+    },
+    {
+      "name": "audio_vision_30_offset",
+      "modalities": [
+        1,
+        2
+      ],
+      "ratio": 0.3,
+      "location": "offset"
+    },
+    {
+      "name": "audio_30_two_blocks",
+      "modalities": [
+        1
+      ],
+      "ratio": 0.3,
+      "location": "two_blocks"
+    }
+  ],
+  "task": "Three-class polarity plus continuous intensity; development validation only",
+  "augmentation": "Reuse audited train.training_batch: 40% clean, 40% single, 20% double; frozen pre-BERT text masking banks; A/V continuous masks",
+  "models": {
+    "mult": {
+      "learning_rate": 0.001,
+      "weight_decay": 0.0001,
+      "dim": 30,
+      "heads": 5,
+      "depth": 5
+    },
+    "emt_dlfr": {
+      "learning_rate": 0.0001,
+      "weight_decay": 0.001,
+      "dim": 128,
+      "heads": 4,
+      "depth": 2,
+      "reconstruction_weight": 1.0,
+      "attraction_weight": 1.0,
+      "complete_supervision_weight": 1.0
+    },
+    "emt_no_restore": {
+      "learning_rate": 0.0001,
+      "weight_decay": 0.001,
+      "dim": 128,
+      "heads": 4,
+      "depth": 2,
+      "reconstruction_weight": 0.0,
+      "attraction_weight": 0.0,
+      "complete_supervision_weight": 1.0
+    }
+  },
+  "hyperparameter_search": "None in this first comparison; source-informed settings fixed before validation results. Historical models had different model capacities and compute budgets.",
+  "supervised_loss": "CE(3 classes) + Huber(intensity); EMT includes same additional complete-view supervision in both variants",
+  "test_policy": "No attachment2 test evaluation or attachment3 fitting; final inference only after model selection.",
+  "implementation_status": "Competition-adapted architectures, not a replication of published benchmark scores",
+  "source_commits": {
+    "MulT": "a670936824ee722c8494fd98d204977a1d663c7a",
+    "EMT-DLFR": "e4216215565292360e9c3fc43c8cd6e127df19c2"
+  },
+  "reference_files_sha256": {
+    "protocol.json": "acd537d1efb7edf69aa8459882d6661f6d8960c7f576a2ce9db2cbc10aaba2f9",
+    "data.py": "f4296110e1b01e1e6bd23a2cb6f53af264991e4ad1c4d8a530d2ef6f3ef3e854",
+    "train.py": "5870c47336c79444a0573078ec1a1eb8fe2fe9ba93ab7795b60eb6a8581453c8",
+    "selection.json": "9a2f86f939e15aeed5619bcd6142730b366a0faa4a22e0464b5705f2e1a19a74",
+    "cache/manifest.json": "17a3e4f6eb23c50a5de2ddf0e50c6223b82717914ef2e38842848e8b624a3a85",
+    "assets/normalization.npz": "e5671f5cee0ec15ac7b6d491ada81a36fca6a370e5021db106c45481f1b56199"
+  },
+  "cache_provenance": {
+    "official_sha256": "66e867aa74bc70a844e806e5571e371c9abb4a35f9e2887ce9b4d97ff2cb8fcd",
+    "protocol_sha256": "acd537d1efb7edf69aa8459882d6661f6d8960c7f576a2ce9db2cbc10aaba2f9",
+    "encoder_sha256": "87eadba7cbd4955fd500af6366f99fea7b609000895e948c6967a822928fe6ba"
+  },
+  "expected_runs": 9
+}

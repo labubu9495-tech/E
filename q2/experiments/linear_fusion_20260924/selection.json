@@ -1,0 +1,29 @@
+{
+  "selected": "pooled_linear",
+  "ranking": [
+    {
+      "family": "pooled_linear",
+      "C": 0.1,
+      "class_weight": "balanced",
+      "alpha": 10.0,
+      "selection_macro_f1_seed_mean": 0.5340699052871073,
+      "selection_macro_f1_seed_std": 0.002274826487313214,
+      "selection_mae_seed_mean": 0.6861320571264757
+    },
+    {
+      "family": "lexical_multimodal_linear",
+      "C": 0.1,
+      "class_weight": "balanced",
+      "alpha": 10.0,
+      "selection_macro_f1_seed_mean": 0.5334751318568214,
+      "selection_macro_f1_seed_std": 0.0016666814277054745,
+      "selection_mae_seed_mean": 0.6858339111010233
+    }
+  ],
+  "protocol_sha256": "4013ec7c26f9c6ccea5ca1d4b6dda04d153bdb9b125dafed4cb31a7cd1ac68fc",
+  "model_sha256": {
+    "pooled_linear": "6d1e35b13d1ce2edbe3929317781b92431160e9ae48e89295e4a934beced9199",
+    "lexical_multimodal_linear": "b88d0ff5f4c5fa6cf9a2b31deb3d35d5601f9beca269a0aa022465e06f671a3d"
+  },
+  "note": "New family/hyperparameter selection on development validation; not an independent test."
+}
