@@ -1,0 +1,15 @@
+
+# E题原始数据，不上传 GitHub
+/E题/E题数据/
+/E题/E题数据.zip
+
+# Python虚拟环境和缓存
+**/.venv/
+**/__pycache__/
+**/*.pyc
+
+# 实验缓存和输出
+**/cache/
+**/results/
+**/runs/
+**/*.log
