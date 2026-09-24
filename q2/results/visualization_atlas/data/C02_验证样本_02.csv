@@ -1,0 +1,5 @@
+﻿sample_id,selection_criterion,text,true_class,true_intensity,condition,predicted_intensity,probability_0,probability_1,probability_2
+_gzYkdjNvPc$_$3,中性正确分类组：回归误差最接近组内中位数,"Other brands include Pacific Sunwear, Cache, Wet Seal, and Quicksilver",1,0.0,clean,0.21869683265686035,0.08690714836120605,0.5949001312255859,0.318192720413208
+_gzYkdjNvPc$_$3,中性正确分类组：回归误差最接近组内中位数,"Other brands include Pacific Sunwear, Cache, Wet Seal, and Quicksilver",1,0.0,text_30_middle,0.26121655106544495,0.07994585484266281,0.5957775712013245,0.32427656650543213
+_gzYkdjNvPc$_$3,中性正确分类组：回归误差最接近组内中位数,"Other brands include Pacific Sunwear, Cache, Wet Seal, and Quicksilver",1,0.0,audio_30_middle,0.23387199640274048,0.08716097474098206,0.5858475565910339,0.3269915282726288
+_gzYkdjNvPc$_$3,中性正确分类组：回归误差最接近组内中位数,"Other brands include Pacific Sunwear, Cache, Wet Seal, and Quicksilver",1,0.0,vision_30_middle,0.232117161154747,0.0854031965136528,0.595524787902832,0.31907203793525696

@@ -1,0 +1,10 @@
+{
+  "unit_checks_passed": 5,
+  "completed_training_runs": 19,
+  "conditions_per_run": 32,
+  "special_predictions": 30,
+  "packaged_inference_byte_identical": true,
+  "prediction_sha256": "8454ba947bd324b2dab92e4948d4b01de2c3973838d8eabb429d668458d279e1",
+  "submission_bytes": 21890628,
+  "scope": "question2 first implementation; same installed runtime, fresh extracted package, no development cache used"
+}

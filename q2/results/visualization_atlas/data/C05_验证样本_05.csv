@@ -1,0 +1,5 @@
+﻿sample_id,selection_criterion,text,true_class,true_intensity,condition,predicted_intensity,probability_0,probability_1,probability_2
+121128$_$5,全体验证样本绝对误差排名靠前,(umm) This movie was excellent,2,3.0,clean,-0.48616281151771545,0.5225589871406555,0.298787385225296,0.17865361273288727
+121128$_$5,全体验证样本绝对误差排名靠前,(umm) This movie was excellent,2,3.0,text_30_middle,-0.6866853833198547,0.4848577678203583,0.41399845480918884,0.10114380717277527
+121128$_$5,全体验证样本绝对误差排名靠前,(umm) This movie was excellent,2,3.0,audio_30_middle,-0.4812854826450348,0.5218783020973206,0.29585322737693787,0.18226850032806396
+121128$_$5,全体验证样本绝对误差排名靠前,(umm) This movie was excellent,2,3.0,vision_30_middle,-0.4862598180770874,0.5200303792953491,0.30085083842277527,0.17911875247955322

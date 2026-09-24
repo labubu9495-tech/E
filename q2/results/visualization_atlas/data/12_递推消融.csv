@@ -1,0 +1,9 @@
+﻿model,seed,metric,value
+state_aug,17,macro_f1,0.5351542340266048
+state_clean,17,macro_f1,0.528588744597735
+state_no_gap,17,macro_f1,0.5328908163228734
+state_no_history,17,macro_f1,0.5372979670601318
+state_aug,17,mae,0.6651238799095154
+state_clean,17,mae,0.6717492789030075
+state_no_gap,17,mae,0.6654060482978821
+state_no_history,17,mae,0.6768634766340256

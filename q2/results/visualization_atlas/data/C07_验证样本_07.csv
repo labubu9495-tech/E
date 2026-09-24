@@ -1,0 +1,5 @@
+﻿sample_id,selection_criterion,text,true_class,true_intensity,condition,predicted_intensity,probability_0,probability_1,probability_2
+HmXXW45eZL4$_$4,错误分类组中最大类别概率排名靠前,"Never ever look hurt, look sad, look angry, start crying, run off stage.",1,0.0,clean,-1.4206923246383667,0.9214951395988464,0.061075374484062195,0.01742958091199398
+HmXXW45eZL4$_$4,错误分类组中最大类别概率排名靠前,"Never ever look hurt, look sad, look angry, start crying, run off stage.",1,0.0,text_30_middle,-1.2572320699691772,0.8765106201171875,0.09483063220977783,0.02865871787071228
+HmXXW45eZL4$_$4,错误分类组中最大类别概率排名靠前,"Never ever look hurt, look sad, look angry, start crying, run off stage.",1,0.0,audio_30_middle,-1.4409856796264648,0.9228234887123108,0.0609060637652874,0.01627042144536972
+HmXXW45eZL4$_$4,错误分类组中最大类别概率排名靠前,"Never ever look hurt, look sad, look angry, start crying, run off stage.",1,0.0,vision_30_middle,-1.421003818511963,0.9225849509239197,0.06003479287028313,0.017380250617861748

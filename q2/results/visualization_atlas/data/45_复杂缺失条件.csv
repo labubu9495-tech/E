@@ -1,0 +1,13 @@
+﻿condition,metric,value
+clean,macro_f1,0.5402719555255052
+audio_30_middle,macro_f1,0.5520276940977374
+audio_vision_30_sync,macro_f1,0.5419475118313496
+audio_vision_30_offset,macro_f1,0.5411153360713146
+text_audio_30_sync,macro_f1,0.5267594899706287
+audio_30_two_blocks,macro_f1,0.5357385178813167
+clean,mae,0.6588125824928284
+audio_30_middle,mae,0.6580082178115845
+audio_vision_30_sync,mae,0.6578643918037415
+audio_vision_30_offset,mae,0.6636847853660583
+text_audio_30_sync,mae,0.6806806921958923
+audio_30_two_blocks,mae,0.6600705981254578

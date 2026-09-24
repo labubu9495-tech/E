@@ -1,0 +1,5 @@
+﻿sample_id,selection_criterion,text,true_class,true_intensity,condition,predicted_intensity,probability_0,probability_1,probability_2
+x2lOwQaAn4g$_$4,错误分类组中最大类别概率排名靠前,All of these exercises are jean friendly and guarantee getting in some fitness time even on work hours,1,0.0,clean,1.1818872690200806,0.02830372005701065,0.08689987659454346,0.8847963809967041
+x2lOwQaAn4g$_$4,错误分类组中最大类别概率排名靠前,All of these exercises are jean friendly and guarantee getting in some fitness time even on work hours,1,0.0,text_30_middle,1.0717658996582031,0.031408507376909256,0.12992055714130402,0.8386709094047546
+x2lOwQaAn4g$_$4,错误分类组中最大类别概率排名靠前,All of these exercises are jean friendly and guarantee getting in some fitness time even on work hours,1,0.0,audio_30_middle,1.153733730316162,0.0313321128487587,0.08422460407018661,0.8844432830810547
+x2lOwQaAn4g$_$4,错误分类组中最大类别概率排名靠前,All of these exercises are jean friendly and guarantee getting in some fitness time even on work hours,1,0.0,vision_30_middle,1.1659740209579468,0.028985172510147095,0.09017004817724228,0.88084477186203

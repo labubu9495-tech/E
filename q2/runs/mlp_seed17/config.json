@@ -1,0 +1,315 @@
+{
+  "name": "mlp",
+  "seed": 17,
+  "kind": "mlp",
+  "augment": true,
+  "use_gap": true,
+  "model_args": {
+    "kind": "mlp",
+    "hidden": 32,
+    "dropout": 0.2,
+    "use_gap": true,
+    "class_prior": [
+      0.28483062982559204,
+      0.2232695072889328,
+      0.49189984798431396
+    ],
+    "target_median": 0.0
+  },
+  "protocol": {
+    "encoder": "google/bert_uncased_L-4_H-256_A-4",
+    "feature_version": "aligned_50",
+    "seed_list": [
+      17,
+      29,
+      43
+    ],
+    "hidden": 32,
+    "batch_size": 64,
+    "max_epochs": 40,
+    "patience": 6,
+    "learning_rate": 0.001,
+    "weight_decay": 0.0001,
+    "dropout": 0.2,
+    "regression_weight": 1.0,
+    "augmentation_probabilities": [
+      0.4,
+      0.4,
+      0.2
+    ],
+    "missing_fraction": [
+      0.1,
+      0.5
+    ],
+    "training_text_bank_variants": 8,
+    "selection": "Maximum mean macro-F1 on clean plus T/A/V 30%-middle validation; tie-break lower average MAE. Selection validation is not independent test evidence.",
+    "conditions": [
+      {
+        "name": "clean",
+        "modalities": [],
+        "ratio": 0.0,
+        "location": "none"
+      },
+      {
+        "name": "text_10_front",
+        "modalities": [
+          0
+        ],
+        "ratio": 0.1,
+        "location": "front"
+      },
+      {
+        "name": "text_10_middle",
+        "modalities": [
+          0
+        ],
+        "ratio": 0.1,
+        "location": "middle"
+      },
+      {
+        "name": "text_10_back",
+        "modalities": [
+          0
+        ],
+        "ratio": 0.1,
+        "location": "back"
+      },
+      {
+        "name": "text_30_front",
+        "modalities": [
+          0
+        ],
+        "ratio": 0.3,
+        "location": "front"
+      },
+      {
+        "name": "text_30_middle",
+        "modalities": [
+          0
+        ],
+        "ratio": 0.3,
+        "location": "middle"
+      },
+      {
+        "name": "text_30_back",
+        "modalities": [
+          0
+        ],
+        "ratio": 0.3,
+        "location": "back"
+      },
+      {
+        "name": "text_50_front",
+        "modalities": [
+          0
+        ],
+        "ratio": 0.5,
+        "location": "front"
+      },
+      {
+        "name": "text_50_middle",
+        "modalities": [
+          0
+        ],
+        "ratio": 0.5,
+        "location": "middle"
+      },
+      {
+        "name": "text_50_back",
+        "modalities": [
+          0
+        ],
+        "ratio": 0.5,
+        "location": "back"
+      },
+      {
+        "name": "audio_10_front",
+        "modalities": [
+          1
+        ],
+        "ratio": 0.1,
+        "location": "front"
+      },
+      {
+        "name": "audio_10_middle",
+        "modalities": [
+          1
+        ],
+        "ratio": 0.1,
+        "location": "middle"
+      },
+      {
+        "name": "audio_10_back",
+        "modalities": [
+          1
+        ],
+        "ratio": 0.1,
+        "location": "back"
+      },
+      {
+        "name": "audio_30_front",
+        "modalities": [
+          1
+        ],
+        "ratio": 0.3,
+        "location": "front"
+      },
+      {
+        "name": "audio_30_middle",
+        "modalities": [
+          1
+        ],
+        "ratio": 0.3,
+        "location": "middle"
+      },
+      {
+        "name": "audio_30_back",
+        "modalities": [
+          1
+        ],
+        "ratio": 0.3,
+        "location": "back"
+      },
+      {
+        "name": "audio_50_front",
+        "modalities": [
+          1
+        ],
+        "ratio": 0.5,
+        "location": "front"
+      },
+      {
+        "name": "audio_50_middle",
+        "modalities": [
+          1
+        ],
+        "ratio": 0.5,
+        "location": "middle"
+      },
+      {
+        "name": "audio_50_back",
+        "modalities": [
+          1
+        ],
+        "ratio": 0.5,
+        "location": "back"
+      },
+      {
+        "name": "vision_10_front",
+        "modalities": [
+          2
+        ],
+        "ratio": 0.1,
+        "location": "front"
+      },
+      {
+        "name": "vision_10_middle",
+        "modalities": [
+          2
+        ],
+        "ratio": 0.1,
+        "location": "middle"
+      },
+      {
+        "name": "vision_10_back",
+        "modalities": [
+          2
+        ],
+        "ratio": 0.1,
+        "location": "back"
+      },
+      {
+        "name": "vision_30_front",
+        "modalities": [
+          2
+        ],
+        "ratio": 0.3,
+        "location": "front"
+      },
+      {
+        "name": "vision_30_middle",
+        "modalities": [
+          2
+        ],
+        "ratio": 0.3,
+        "location": "middle"
+      },
+      {
+        "name": "vision_30_back",
+        "modalities": [
+          2
+        ],
+        "ratio": 0.3,
+        "location": "back"
+      },
+      {
+        "name": "vision_50_front",
+        "modalities": [
+          2
+        ],
+        "ratio": 0.5,
+        "location": "front"
+      },
+      {
+        "name": "vision_50_middle",
+        "modalities": [
+          2
+        ],
+        "ratio": 0.5,
+        "location": "middle"
+      },
+      {
+        "name": "vision_50_back",
+        "modalities": [
+          2
+        ],
+        "ratio": 0.5,
+        "location": "back"
+      },
+      {
+        "name": "audio_vision_30_sync",
+        "modalities": [
+          1,
+          2
+        ],
+        "ratio": 0.3,
+        "location": "middle"
+      },
+      {
+        "name": "text_audio_30_sync",
+        "modalities": [
+          0,
+          1
+        ],
+        "ratio": 0.3,
+        "location": "middle"
+      },
+      {
+        "name": "audio_vision_30_offset",
+        "modalities": [
+          1,
+          2
+        ],
+        "ratio": 0.3,
+        "location": "offset"
+      },
+      {
+        "name": "audio_30_two_blocks",
+        "modalities": [
+          1
+        ],
+        "ratio": 0.3,
+        "location": "two_blocks"
+      }
+    ],
+    "limitations": [
+      "Missing duration is sequence positions, not seconds.",
+      "Artificial raw-token loss is applied before BERT; official A/V zero rows have unknown provenance.",
+      "No attachment3 distribution fitting; attachment2 test remains untouched.",
+      "No timestamp reconstruction needed for question2."
+    ]
+  },
+  "parameters": 16581,
+  "device": "cpu",
+  "torch_version": "2.10.0+cu130"
+}

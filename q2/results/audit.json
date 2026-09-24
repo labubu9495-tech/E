@@ -1,0 +1,703 @@
+{
+  "official_sha256": "66e867aa74bc70a844e806e5571e371c9abb4a35f9e2887ce9b4d97ff2cb8fcd",
+  "splits": {
+    "train": {
+      "n": 3395,
+      "class_counts": [
+        967,
+        758,
+        1670
+      ],
+      "intensity_range": [
+        -3.0,
+        3.0
+      ],
+      "token_shape": [
+        3395,
+        3,
+        50
+      ],
+      "sequence_length_quantiles": [
+        1.0,
+        14.0,
+        20.0,
+        30.0,
+        48.0
+      ],
+      "zero_rows_within_content": {
+        "text": 0,
+        "audio": 65,
+        "vision": 4249
+      },
+      "nonfinite": {
+        "audio": 0,
+        "vision": 0
+      },
+      "endpoint_sources": [
+        "SEP"
+      ]
+    },
+    "valid": {
+      "n": 728,
+      "class_counts": [
+        206,
+        184,
+        338
+      ],
+      "intensity_range": [
+        -3.0,
+        3.0
+      ],
+      "token_shape": [
+        728,
+        3,
+        50
+      ],
+      "sequence_length_quantiles": [
+        1.0,
+        15.0,
+        21.5,
+        31.0,
+        48.0
+      ],
+      "zero_rows_within_content": {
+        "text": 0,
+        "audio": 46,
+        "vision": 980
+      },
+      "nonfinite": {
+        "audio": 0,
+        "vision": 0
+      },
+      "endpoint_sources": [
+        "SEP"
+      ]
+    }
+  },
+  "label_mapping": {
+    "0": "Negative",
+    "1": "Neutral",
+    "2": "Positive"
+  },
+  "video_group_overlaps": {
+    "train_valid": 0,
+    "train_test": 0,
+    "valid_test": 0
+  },
+  "test_n_only": 727,
+  "special_interface_only": [
+    {
+      "file": "附件3_01.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_02.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_03.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_04.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_05.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_06.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_07.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_08.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_09.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_10.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_11.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_12.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_13.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_14.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_15.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_16.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_17.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_18.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_19.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_20.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_21.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_22.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_23.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_24.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_25.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_26.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_27.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_28.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_29.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    },
+    {
+      "file": "附件3_30.pkl",
+      "fields": {
+        "text_bert": [
+          1,
+          3,
+          50
+        ],
+        "vision": [
+          1,
+          50,
+          35
+        ],
+        "audio": [
+          1,
+          50,
+          74
+        ]
+      }
+    }
+  ],
+  "zero_policy": "Within SEP-defined content, finite nonzero A/V rows are operational observations. Natural zeros and artificial loss cannot be distinguished. Padding is excluded separately.",
+  "tokenizer_verification": [
+    {
+      "split": "train",
+      "matching_tokenizations": 3395,
+      "n": 3395
+    },
+    {
+      "split": "valid",
+      "matching_tokenizations": 728,
+      "n": 728
+    }
+  ]
+}

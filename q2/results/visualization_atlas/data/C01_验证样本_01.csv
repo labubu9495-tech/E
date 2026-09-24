@@ -1,0 +1,5 @@
+﻿sample_id,selection_criterion,text,true_class,true_intensity,condition,predicted_intensity,probability_0,probability_1,probability_2
+266791$_$14,负向正确分类组：回归误差最接近组内中位数,"(umm) If that sounds exciting to you then maybe you can go check this movie out, but otherwise, don't bother",0,-1.3333333730697632,clean,-0.6780636310577393,0.7159059643745422,0.14384710788726807,0.14024685323238373
+266791$_$14,负向正确分类组：回归误差最接近组内中位数,"(umm) If that sounds exciting to you then maybe you can go check this movie out, but otherwise, don't bother",0,-1.3333333730697632,text_30_middle,-0.8027207255363464,0.8074459433555603,0.09942379593849182,0.09313029050827026
+266791$_$14,负向正确分类组：回归误差最接近组内中位数,"(umm) If that sounds exciting to you then maybe you can go check this movie out, but otherwise, don't bother",0,-1.3333333730697632,audio_30_middle,-0.610442578792572,0.6911478042602539,0.14026550948619843,0.16858671605587006
+266791$_$14,负向正确分类组：回归误差最接近组内中位数,"(umm) If that sounds exciting to you then maybe you can go check this movie out, but otherwise, don't bother",0,-1.3333333730697632,vision_30_middle,-0.6635695099830627,0.7107272148132324,0.144301176071167,0.1449715942144394

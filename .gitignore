@@ -13,3 +13,7 @@
 **/results/
 **/runs/
 **/*.log
+
+# GitHub 单文件超过 100 MB，不上传
+q2/cache/valid.npz
+q2/cache/train.npz

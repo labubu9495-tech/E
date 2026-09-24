@@ -1,0 +1,5 @@
+﻿sample_id,selection_criterion,text,true_class,true_intensity,condition,predicted_intensity,probability_0,probability_1,probability_2
+270254$_$14,分类与回归方向冲突组中回归误差最大,Half the time the camera was doing three-sixties,0,-1.6666666269302368,clean,-0.16294492781162262,0.31474804878234863,0.2993021011352539,0.38594985008239746
+270254$_$14,分类与回归方向冲突组中回归误差最大,Half the time the camera was doing three-sixties,0,-1.6666666269302368,text_30_middle,0.10716751962900162,0.22102268040180206,0.22597838938236237,0.552998960018158
+270254$_$14,分类与回归方向冲突组中回归误差最大,Half the time the camera was doing three-sixties,0,-1.6666666269302368,audio_30_middle,-0.13550379872322083,0.28218314051628113,0.29793834686279297,0.4198784828186035
+270254$_$14,分类与回归方向冲突组中回归误差最大,Half the time the camera was doing three-sixties,0,-1.6666666269302368,vision_30_middle,-0.13544411957263947,0.30555593967437744,0.29952800273895264,0.3949160575866699

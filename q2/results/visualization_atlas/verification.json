@@ -1,0 +1,39 @@
+{
+  "analysis_figures": 54,
+  "sample_cards": 40,
+  "png_files": 94,
+  "svg_files": 94,
+  "csv_files": 94,
+  "all_pngs_verified": true,
+  "protected_inputs_unchanged": true,
+  "protected_sha256": {
+    "selection.json": "9a2f86f939e15aeed5619bcd6142730b366a0faa4a22e0464b5705f2e1a19a74",
+    "results/attachment3_predictions.csv": "8454ba947bd324b2dab92e4948d4b01de2c3973838d8eabb429d668458d279e1",
+    "results/selected_validation_predictions.npz": "f72085a49a7fb046d00132ee8e14c9919f4531910c74d602ce79d4f59b832db9",
+    "results/model_comparison.csv": "1b5165f6ef05ae89331330581d8e4f0c65b6232493c0f40c5c8e196a7a33fc85",
+    "runs/gru_aug_seed17/best.pt": "e779e273935f7da47f467ba0746a363fcef04fe602d5be43cb66abd63d06bd57",
+    "runs/gru_aug_seed29/best.pt": "fbd681c4326ef301fc6f2eb1ff5e5572cef1fcf70c5179aed7bcd0357baf178a",
+    "runs/gru_aug_seed43/best.pt": "18809fe94f83b6bc0433b1ae1561dcaa3581a059fe659837eb80e8f65baa118f",
+    "runs/gru_clean_seed17/best.pt": "e41997e9f1bd940bd43746556605e921579f7d46fcde8707ed6b87c6018bf014",
+    "runs/gru_clean_seed29/best.pt": "e6be44f19cb34e14cd4f9dab5f6222db32cdf61a06f3c680601f866295d0471e",
+    "runs/gru_clean_seed43/best.pt": "67924e66fac1ffe5628bb575601593c07d57be323f392d0225c2afb9ee959a92",
+    "runs/mlp_seed17/best.pt": "d2e14a147a63487f3fa0fd6cc4d1438d28d46cac06ba71f9bb48c40a24cddaeb",
+    "runs/mlp_seed29/best.pt": "28ea99f6ff0a3b9a6ae50ab702d3b801642d87437f443ccc4463bb6633290b92",
+    "runs/mlp_seed43/best.pt": "27913b9bbba9a7e23d25cd128405952967a7b1b18ac54a5fe8305e0187164817",
+    "runs/smooth_aug_seed17/best.pt": "2af0d49c53dfd7ea8620b32b8287b875c04810b8dac15e0b34fa56f6e20cf96e",
+    "runs/smooth_aug_seed29/best.pt": "d55ce76b9ecdf447760540ca37753a1cd8e0f18639e395eabd27479f74d22908",
+    "runs/smooth_aug_seed43/best.pt": "9c6902e2322d4dc9dedbffe760e3b0446f10f14c0413b5fbfe881e84a7197b6e",
+    "runs/state_aug_seed17/best.pt": "38cbee5c5e68456a007155888a7eb34d5dac0c97f8d44c1db6e5c48fa1469257",
+    "runs/state_aug_seed29/best.pt": "8010eebc6fbfe1f05656ea20fa7cff24c5ec08f6ce9af832bc90f68476f57636",
+    "runs/state_aug_seed43/best.pt": "e5227bafcc6dc94b84c404e0a2e588a153438e7a30787223ab9275b5d58e54c7",
+    "runs/state_clean_seed17/best.pt": "e24b28234f0168f712a8ddf32772f104869bdd25c76838ac5b4051bf24672a5a",
+    "runs/state_no_gap_seed17/best.pt": "da2b055eb1abe129d6302aa0cc38f34c833ca615df9b6e7896ffbfec7171c646",
+    "runs/state_no_history_seed17/best.pt": "562178c5caf8f60a142b0309bfa1b5e34ced8716648db1b45cdf9059c009ab1b",
+    "runs/text_seed17/best.pt": "524e5e7680b4108a9279e619ed0435517614e07e866bd93a3920975024a7fcc5"
+  },
+  "versions": {
+    "numpy": "2.5.0",
+    "pandas": "3.0.2",
+    "matplotlib": "3.10.9"
+  }
+}

@@ -1,0 +1,31 @@
+gru_clean_seed29 epoch=1 loss=1.4801 clean_F1=0.4027 robust_select_F1=0.3982 MAE=0.7156 seconds=2.0
+gru_clean_seed29 epoch=2 loss=1.2656 clean_F1=0.4303 robust_select_F1=0.4206 MAE=0.6838 seconds=3.9
+gru_clean_seed29 epoch=3 loss=1.2061 clean_F1=0.4441 robust_select_F1=0.4514 MAE=0.6742 seconds=5.7
+gru_clean_seed29 epoch=4 loss=1.1633 clean_F1=0.5119 robust_select_F1=0.5110 MAE=0.6744 seconds=7.5
+gru_clean_seed29 epoch=5 loss=1.1208 clean_F1=0.5286 robust_select_F1=0.5280 MAE=0.6638 seconds=9.3
+gru_clean_seed29 epoch=6 loss=1.1111 clean_F1=0.5364 robust_select_F1=0.5291 MAE=0.6779 seconds=11.1
+gru_clean_seed29 epoch=7 loss=1.0898 clean_F1=0.5052 robust_select_F1=0.5129 MAE=0.6831 seconds=12.9
+gru_clean_seed29 epoch=8 loss=1.0631 clean_F1=0.5272 robust_select_F1=0.5244 MAE=0.6847 seconds=14.7
+gru_clean_seed29 epoch=9 loss=1.0379 clean_F1=0.5204 robust_select_F1=0.5166 MAE=0.6881 seconds=16.4
+gru_clean_seed29 epoch=10 loss=1.0278 clean_F1=0.5291 robust_select_F1=0.5165 MAE=0.6949 seconds=18.2
+gru_clean_seed29 epoch=11 loss=1.0007 clean_F1=0.5061 robust_select_F1=0.5106 MAE=0.6923 seconds=20.0
+gru_clean_seed29 epoch=12 loss=0.9902 clean_F1=0.5443 robust_select_F1=0.5310 MAE=0.6780 seconds=21.7
+gru_clean_seed29 epoch=13 loss=0.9417 clean_F1=0.5174 robust_select_F1=0.5115 MAE=0.6811 seconds=23.5
+gru_clean_seed29 epoch=14 loss=0.9124 clean_F1=0.5095 robust_select_F1=0.5108 MAE=0.7148 seconds=25.2
+gru_clean_seed29 epoch=15 loss=0.9059 clean_F1=0.5096 robust_select_F1=0.5120 MAE=0.7056 seconds=27.0
+gru_clean_seed29 epoch=16 loss=0.8727 clean_F1=0.5321 robust_select_F1=0.5261 MAE=0.6838 seconds=28.8
+gru_clean_seed29 epoch=17 loss=0.8496 clean_F1=0.5281 robust_select_F1=0.5149 MAE=0.7075 seconds=30.5
+gru_clean_seed29 epoch=18 loss=0.8136 clean_F1=0.5088 robust_select_F1=0.5100 MAE=0.7262 seconds=32.2
+Completed gru_clean_seed29
+gru_clean_seed43 epoch=1 loss=1.4379 clean_F1=0.4137 robust_select_F1=0.4078 MAE=0.7045 seconds=1.9
+gru_clean_seed43 epoch=2 loss=1.2688 clean_F1=0.4561 robust_select_F1=0.4535 MAE=0.6778 seconds=3.8
+gru_clean_seed43 epoch=3 loss=1.2028 clean_F1=0.5041 robust_select_F1=0.5056 MAE=0.6755 seconds=5.7
+gru_clean_seed43 epoch=4 loss=1.1746 clean_F1=0.5270 robust_select_F1=0.5163 MAE=0.6700 seconds=7.5
+gru_clean_seed43 epoch=5 loss=1.1348 clean_F1=0.5290 robust_select_F1=0.5232 MAE=0.6627 seconds=9.4
+gru_clean_seed43 epoch=6 loss=1.0966 clean_F1=0.5296 robust_select_F1=0.5222 MAE=0.6709 seconds=11.2
+gru_clean_seed43 epoch=7 loss=1.0676 clean_F1=0.4908 robust_select_F1=0.4963 MAE=0.6983 seconds=13.0
+gru_clean_seed43 epoch=8 loss=1.0606 clean_F1=0.5123 robust_select_F1=0.5117 MAE=0.6748 seconds=14.7
+gru_clean_seed43 epoch=9 loss=1.0161 clean_F1=0.5118 robust_select_F1=0.5097 MAE=0.6787 seconds=16.4
+gru_clean_seed43 epoch=10 loss=0.9974 clean_F1=0.5094 robust_select_F1=0.5054 MAE=0.6782 seconds=18.2
+gru_clean_seed43 epoch=11 loss=0.9694 clean_F1=0.5172 robust_select_F1=0.5150 MAE=0.6722 seconds=19.9
+Completed gru_clean_seed43

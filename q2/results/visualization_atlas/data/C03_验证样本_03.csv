@@ -1,0 +1,5 @@
+﻿sample_id,selection_criterion,text,true_class,true_intensity,condition,predicted_intensity,probability_0,probability_1,probability_2
+tXQpm-nKxNA$_$5,正向正确分类组：回归误差最接近组内中位数,For those of you already pursuing an education abroad I'm very grateful and wish you well.,2,1.6666666269302368,clean,1.2280806303024292,0.028614073991775513,0.06470822542905807,0.9066777229309082
+tXQpm-nKxNA$_$5,正向正确分类组：回归误差最接近组内中位数,For those of you already pursuing an education abroad I'm very grateful and wish you well.,2,1.6666666269302368,text_30_middle,1.167683720588684,0.03736216947436333,0.05886262655258179,0.9037752151489258
+tXQpm-nKxNA$_$5,正向正确分类组：回归误差最接近组内中位数,For those of you already pursuing an education abroad I'm very grateful and wish you well.,2,1.6666666269302368,audio_30_middle,1.2123383283615112,0.03053084760904312,0.061622340232133865,0.9078467488288879
+tXQpm-nKxNA$_$5,正向正确分类组：回归误差最接近组内中位数,For those of you already pursuing an education abroad I'm very grateful and wish you well.,2,1.6666666269302368,vision_30_middle,1.2076908349990845,0.029393106698989868,0.06628680974245071,0.9043201804161072

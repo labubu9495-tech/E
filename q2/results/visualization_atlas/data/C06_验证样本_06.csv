@@ -1,0 +1,5 @@
+﻿sample_id,selection_criterion,text,true_class,true_intensity,condition,predicted_intensity,probability_0,probability_1,probability_2
+102858$_$6,全体验证样本绝对误差排名靠前,It's probably three of the best (stutter) holiday specials made in the last (uhh) let's see,2,2.6666667461395264,clean,-0.4930605888366699,0.4560750722885132,0.3658634126186371,0.1780615597963333
+102858$_$6,全体验证样本绝对误差排名靠前,It's probably three of the best (stutter) holiday specials made in the last (uhh) let's see,2,2.6666667461395264,text_30_middle,-0.774279773235321,0.5736129879951477,0.326589435338974,0.09979752451181412
+102858$_$6,全体验证样本绝对误差排名靠前,It's probably three of the best (stutter) holiday specials made in the last (uhh) let's see,2,2.6666667461395264,audio_30_middle,-0.5697965621948242,0.5220522284507751,0.3239116370677948,0.15403611958026886
+102858$_$6,全体验证样本绝对误差排名靠前,It's probably three of the best (stutter) holiday specials made in the last (uhh) let's see,2,2.6666667461395264,vision_30_middle,-0.48992207646369934,0.45413291454315186,0.36751309037208557,0.1783539205789566

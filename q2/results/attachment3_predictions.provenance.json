@@ -1,0 +1,218 @@
+{
+  "model": "mlp",
+  "selection_sha256": "9a2f86f939e15aeed5619bcd6142730b366a0faa4a22e0464b5705f2e1a19a74",
+  "n_files": 30,
+  "n_predictions": 30,
+  "rows": [
+    {
+      "sample_id": "附件3_01",
+      "source_file": "附件3_01.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_02",
+      "source_file": "附件3_02.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_03",
+      "source_file": "附件3_03.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_04",
+      "source_file": "附件3_04.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_05",
+      "source_file": "附件3_05.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_06",
+      "source_file": "附件3_06.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_07",
+      "source_file": "附件3_07.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_08",
+      "source_file": "附件3_08.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_09",
+      "source_file": "附件3_09.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_10",
+      "source_file": "附件3_10.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_11",
+      "source_file": "附件3_11.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_12",
+      "source_file": "附件3_12.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_13",
+      "source_file": "附件3_13.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_14",
+      "source_file": "附件3_14.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_15",
+      "source_file": "附件3_15.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_16",
+      "source_file": "附件3_16.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_17",
+      "source_file": "附件3_17.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_18",
+      "source_file": "附件3_18.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_19",
+      "source_file": "附件3_19.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_20",
+      "source_file": "附件3_20.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_21",
+      "source_file": "附件3_21.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_22",
+      "source_file": "附件3_22.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_23",
+      "source_file": "附件3_23.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_24",
+      "source_file": "附件3_24.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_25",
+      "source_file": "附件3_25.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_26",
+      "source_file": "附件3_26.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_27",
+      "source_file": "附件3_27.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_28",
+      "source_file": "附件3_28.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_29",
+      "source_file": "附件3_29.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    },
+    {
+      "sample_id": "附件3_30",
+      "source_file": "附件3_30.pkl",
+      "row": 0,
+      "endpoint_source": "SEP",
+      "no_observations": false
+    }
+  ]
+}

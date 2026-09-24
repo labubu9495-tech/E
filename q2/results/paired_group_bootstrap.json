@@ -1,0 +1,20 @@
+{
+  "clean": {
+    "state_minus_gru_mae": 0.006409111898392439,
+    "percentile_95": [
+      -0.0007884400882176123,
+      0.01397087730001658
+    ],
+    "n_video_groups": 239,
+    "note": "Development validation used for selection; interval describes paired validation variability, not independent generalization proof."
+  },
+  "text_30_middle": {
+    "state_minus_gru_mae": 0.014303427189588547,
+    "percentile_95": [
+      0.005005524144507945,
+      0.022899481141939758
+    ],
+    "n_video_groups": 239,
+    "note": "Development validation used for selection; interval describes paired validation variability, not independent generalization proof."
+  }
+}
